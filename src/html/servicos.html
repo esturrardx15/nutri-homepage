@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Serviços da Nutricionista Mariah Katharine - Consulta nutricional, reeducação alimentar, atendimento online e muito mais.">
+    <meta name="theme-color" content="#1c3a0d">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <!-- SEGURANÇA: Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src https://cdnjs.cloudflare.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/servicos">
+    <meta property="og:title" content="Serviços - Nutricionista Mariah Katharine">
+    <meta property="og:description"
+        content="Consulta nutricional, reeducação alimentar, atendimento online e muito mais.">
+    <meta property="og:image" content="../../img/imagem.png">
+    <meta property="og:locale" content="pt_BR">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Serviços - Nutricionista Mariah Katharine">
+    <meta name="twitter:description"
+        content="Consulta nutricional, reeducação alimentar, atendimento online e muito mais.">
+    <title>Serviços - Nutricionista Mariah Katharine</title>
+    <link rel="icon"
+        href="data:image/svg+xml, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥑</text></svg>">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/servicos.css">
+</head>
+<body>
+
+    <!-- Skip to content -->
+     <a class="skip-link" href="#servicos-grid">Pular para os serviços</a>
+
+    <!-- Barra de progresso do scroll -->
+     <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+    <header>
+        <h1>Serviços</h1>
+        <p>Conheça todas as formas de cuidar da sua saúde com acompanhamento profissional</p>
+        <!-- hamburger menu (mobile) -->
+         <button class="hamburger" id="btnHamburger" aria-label="Abrir menu de navegação" aria-expanded="false">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-times"></i>
+         </button>
+         <!-- Toggle de tema claro/escuro -->
+          <button class="btn-tema" id="btnTema" aria-label="Alternar tema claro/escuro" title="Alternar tema">
+            <i class="fas fa-moon" aria-hidden="true"></i>
+            <i class="fas fa-sun" aria-hidden="true"></i>
+          </button>
+          <nav id="navPrincipal" aria-label="Navegação da página de serviços">
+            <a class="btn-voltar" href="homepage.html"><i class="fas fa-arrow-left"></i> Voltar ao início</a>
+            <a class="btn-whatsapp-nav" data-link="whatsapp" data-whatsapp-context="geral" href="#" aria-label="Abrir WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+          </nav>
+    </header>
+
+    <main>
+        <div class="container">
+
+            <div class="intro">
+                <h2>Atendimento personalizado para cada fase da sua vida</h2>
+                <p>Cada pessoa é única. Por isso, todos os meus atendimentos são individualizados, levando em conta seus objetivos, rotina, preferências alimentares e histórico de saúde.</p>
+            </div>
+
+            <div class="servicos-grid" id="servicos-grid">
+
+                <article class="card">
+                    <div class="card-icone">🥗</div>
+                    <h3>Consulta Nutricional Completa</h3>
+                    <p>Avaliação nutricional detalhada com anamnese alimentar, análise de exames laboratoriais e elaboração de plano alimentar 100% personalizado</p>
+                    <ul>
+                        <li>Avaliação do estado nutricional</li>
+                        <li>Análise de composição corporal</li>
+                        <li>Plano alimentar individualizado</li>
+                        <li>Orientações de suplementação se necessário</li>
+                    </ul>
+                    <div class="card-info">
+                        <span class="badge"><i class="fas fa-clock"></i> ~60 min</span>
+                        <span class="badge">Presencial / Online</span>
+                    </div>
+                    <a class="btn-agendar" data-link="whatsapp" data-whatsapp-context="servico" data-servico="Consulta Nutricional Completa" href="#" aria-label="Agendar Consulta Nutricional Completa">
+                        <i class="fab fa-whatsapp"></i> Agendar
+                    </a>
+                </article>
+
+                 <article class="card">
+                    <div class="card-icone">🔁</div>
+                    <h3>Reeducação Alimentar</h3>
+                    <p>Programa contínuo focado em transformar sua relação com a comida de forma gradual, sem restrições radicais e com resultados sustentáveis</p>
+                    <ul>
+                        <li>Acompanhamento semanal ou quinzenal</li>
+                        <li>Ajustes progressivos no plano alimentar</li>
+                        <li>Educação nutricional em cada consulta</li>
+                        <li>Suporte por mensagem entre consultas</li>
+                    </ul>
+                    <div class="card-info">
+                        <span class="badge"><i class="fas fa-clock"></i> Programa mensal</span>
+                        <span class="badge">Presencial / Online</span>
+                    </div>
+                    <a class="btn-agendar" data-link="whatsapp" data-whatsapp-context="servico" data-servico="Reeducação Alimentar" href="#" aria-label="Agendar CReeducação Alimentar">
+                        <i class="fab fa-whatsapp"></i> Agendar
+                    </a>
+                </article>
+
+                 <article class="card">
+                    <div class="card-icone">💻</div>
+                    <h3>Atendimento Online</h3>
+                    <p>Toda a qualidade do atendimento presencial no conforto da sua casa. Consultas por videoconferência com a mesma atenção e cuidado</p>
+                    <ul>
+                        <li>Plataforma segura e fácil de usar</li>
+                        <li>Envio digital do plano alimentar</li>
+                        <li>Horários flexíveis</li>
+                        <li>Atendimento em todo o Brasil</li>
+                    </ul>
+                    <div class="card-info">
+                        <span class="badge"><i class="fas fa-clock"></i> ~50 min</span>
+                        <span class="badge">100% Online</span>
+                    </div>
+                    <a class="btn-agendar" data-link="whatsapp" data-whatsapp-context="servico" data-servico="Atendimento Online" href="#" aria-label="Agendar Atendimento Online">
+                        <i class="fab fa-whatsapp"></i> Agendar
+                    </a>
+                </article>
+
+                 <article class="card">
+                    <div class="card-icone">🏋️</div>
+                    <h3>Nutrição Esportiva</h3>
+                    <p>Planejamento alimentar voltado para atletas e praticantes de atividade física que buscam melhorar performance, ganho muscular ou perca de peso</p>
+                    <ul>
+                        <li>Adequação nutricional ao tipo de treino</li>
+                        <li>Estrátegias de pré e pós-treino</li>
+                        <li>Orientação sobre suplementos</li>
+                        <li>Periodização nutricional</li>
+                    </ul>
+                    <div class="card-info">
+                        <span class="badge"><i class="fas fa-clock"></i> ~60 min</span>
+                        <span class="badge">Presencial / Online</span>
+                    </div>
+                    <a class="btn-agendar" data-link="whatsapp" data-whatsapp-context="servico" data-servico="Nutrição Esportiva" href="#" aria-label="Agendar Nutrição Esportiva">
+                        <i class="fab fa-whatsapp"></i> Agendar
+                    </a>
+                </article>
+
+                 <article class="card">
+                    <div class="card-icone">👶</div>
+                    <h3>Nutrição Infantil</h3>
+                    <p>Acompanhamento nutricional especializado para crianças, com foco no crescimento saudável, introdução alimentar e formação de bons hábitos desde cedo.</p>
+                    <ul>
+                        <li>Introdução alimentar (BLW e tradicional)</li>
+                        <li>Avaliação do crescimento e desenvolvimento</li>
+                        <li>Orientação aos pais e cuidadores</li>
+                        <li>Cardápios criativos e nutritivos</li>
+                    </ul>
+                    <div class="card-info">
+                        <span class="badge"><i class="fas fa-clock"></i> ~50 min</span>
+                        <span class="badge">Presencial / Online</span>
+                    </div>
+                    <a class="btn-agendar" data-link="whatsapp" data-whatsapp-context="servico" data-servico="Nutrição Infantil" href="#" aria-label="Nutrição Infantil">
+                        <i class="fab fa-whatsapp"></i> Agendar
+                    </a>
+                </article>
+
+                <article class="card">
+                    <div class="card-icone">🗓️</div>
+                    <h3>Acompanhamento Mensal</h3>
+                    <p>Pacote de retorno mensal para quem já fez a consulta inicial e deseja manter o acompanhamento contínuo com ajustes no plano alimentar.</p>
+                    <ul>
+                        <li>Revisão e atualização do plano</li>
+                        <li>Avaliação de progresso</li>
+                        <li>Suporte via Whatsapp no mês</li>
+                        <li>Receitas e dicas personalizadas</li>
+                    </ul>
+                    <div class="card-info">
+                        <span class="badge"><i class="fas fa-clock"></i> ~50 min</span>
+                        <span class="badge">Presencial / Online</span>
+                    </div>
+                    <a class="btn-agendar" data-link="whatsapp" data-whatsapp-context="servico" data-servico="Acompanhamento Mensal" href="#" aria-label="Acompanhamento Mensal">
+                        <i class="fab fa-whatsapp"></i> Agendar
+                    </a>
+                </article>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="flex-row">
+            <a class="btn-voltar" href="homepage.html"><i class="fas fa-arrow-left"></i> Voltar ao início</a>
+            <p data-config="copyright">© 2026 Mariah Katharine. Todos os direitos reservados.</p>
+        </div>
+        <div class="flex-row">
+            <a class="btn-instagram" data-link="instagram" href="#" aria-label="Instagram"><i
+                    class="fab fa-instagram"></i>Instagram</a>
+            <a class="btn-whatsapp" data-link="whatsapp" href="#" aria-label="WhatsApp"><i
+                    class="fab fa-whatsapp"></i>Whatsapp</a>
+        </div>
+    </footer>
+
+    <!-- Whatsapp flutuante -->
+    <a class="whatsapp-flutuante" data-link="whatsapp" href="#" aria-label="Fale conosco pelo Whatsapp">
+        <i class="fab fa-whatsapp"></i>
+        <button class="wpp-close" aria-label="Fechar botão Whatsapp" title="Fechar">x</button>
+    </a>
+
+    <button class="btn-topo" id="btnTopo" aria-label="Voltar ao topo da página" title="Voltar ao topo">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- JS compartilhado (auto-inicialização via DOMContentLoaded - sem inline scripts)-->
+    <script src="../js/script.js"></script>
+
+</body>
+</html>

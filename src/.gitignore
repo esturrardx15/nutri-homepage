@@ -1,0 +1,51 @@
+# .gitignore - Protege arquivos internos de serem enviados para repositórios públicos (GitHUb, etc.)
+
+### IntelliJ IDEA ###
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+.kotlin
+*.iml
+.idea/
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
+
+### Windows ###
+Thumbs.db
+Desktop.ini
+
+### Logs & Temp ###
+*.log
+*.tmp
+*.bak
+*.swp
+
+### Dependências (caso use npm/node no futuro) ###
+node_modules/
+package-lock.json
+
+### Vercel ###
+.vercel/

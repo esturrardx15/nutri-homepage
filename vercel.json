@@ -1,0 +1,123 @@
+{
+    "rewrites": [
+        {
+            "source": "/",
+            "destination": "/src/html/homepage.html"
+        },
+        {
+            "source": "/servicos",
+            "destination": "/src/html/servicos.html"
+        },
+        {
+            "source": "/blog",
+            "destination": "/src/html/blog.html"
+        },
+        {
+            "source": "/blog/post",
+            "destination": "/src/html/blog-post.html"
+        },
+        {
+            "source": "/admin",
+            "destination": "/src/html/admin.html"
+        }
+    ],
+    "redirects": [
+        {
+            "source": "/index.html",
+            "destination": "/",
+            "permanent": true
+        },
+        {
+            "source": "/homepage.html",
+            "destination": "/",
+            "permanent": false
+        },
+        {
+            "source": "/src/html/homepage.html",
+            "destination": "/",
+            "permanent": false
+        },
+        {
+            "source": "/src/servicos.html",
+            "destination": "/servicos",
+            "permanent": false
+        },
+        {
+            "source": "/src/html/servicos.html",
+            "destination": "/servicos",
+            "permanent": false
+        },
+        {
+            "source": "/src/blog.html",
+            "destination": "/blog",
+            "permanent": false
+        },
+        {
+            "source": "/src/html/blog.html",
+            "destination": "/blog",
+            "permanent": false
+        },
+        {
+            "source": "/src/blog-post.html",
+            "destination": "/blog/post",
+            "permanent": false
+        },
+        {
+            "source": "/src/html/blog-post.html",
+            "destination": "/blog/post",
+            "permanent": false
+        }
+    ],
+    "headers": [
+        {
+            "source": "/(.*)",
+            "headers": [
+                {
+                    "key": "X-Content-Type-Options",
+                    "value": "nosniff"
+                },
+                {
+                    "key": "X-Frame-Options",
+                    "value": "DENY"
+                },
+                {
+                    "key": "X-XSS-Protection",
+                    "value": "1; mode=block"
+                },
+                {
+                    "key": "Referrer-Policy",
+                    "value": "strict-origin-when-cross-origin"
+                },
+                {
+                    "key": "Permission-Policy",
+                    "value": "camera=(), microphone=(), geolocation=()"
+                },
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src https://cdnjs.cloudflare.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';"
+                }
+            ]
+        },
+        {
+            "source": "/img/(.*)",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=31536000, immutable"
+                }
+            ]
+        },
+        {
+            "source": "/src/css/(.*\\.css)",
+            "headers": [
+                { "key": "Cache-Control", "value": "public, max-age=604800" }
+            ]
+        },
+        {
+            "source": "/src/js/(.*\\.js)",
+            "headers": [
+                { "key": "Cache-Control", "value": "public, max-age=604800" }
+            ]
+        }
+    ]
+}

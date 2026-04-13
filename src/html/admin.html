@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Área administrativa - Gerenciamento de posts do blog.">
+    <meta name="theme-color" content="#1c3a0d">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <!-- SEGURANÇA: bloqueia indexação do admin por robôs -->
+    <meta name="robots" content="noindex, nofollow">
+    <!-- SEGURANÇA: CSP do admin - permite blob: para preview de imagens -->
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src https://cdnjs.cloudflare.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
+    <title>Admin - Blog Nutricionista</title>
+    <link rel="icon"
+        href="data:image/svg+xml, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✏️</text></svg>">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+
+<body>
+
+    <!-- Anti-clickjacking JS é tratado no script.js -->
+    <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+    <header>
+        <h1>✏️ Painel da Nutricionista</h1>
+        <button class="hamburger" id="btnHamburger" aria-label="Abrir menu de navegação" aria-expanded="false">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-times"></i>
+        </button>
+        <button class="btn-tema" id="btnTema" aria-label="Alternar tema claro/escuro" title="Alternar tema">
+            <i class="fas fa-moon" aria-hidden="true"></i>
+            <i class="fas fa-sun" aria-hidden="true"></i>
+        </button>
+        <nav id="navPrincipal" aria-label="Navegação do admin">
+            <a href="homepage.html"><i class="fas fa-home"></i> Início</a>
+            <a href="blog.html"><i class="fas fa-newspaper"></i> Blog</a>
+        </nav>
+    </header>
+
+    <main class="admin-layout">
+
+        <!-- AVISO DE URL OCULTA -->
+        <div class="admin-aviso" role="note" aria-label="Aviso de segurança">
+            <i class="fas fa-lock" aria-hidden="true"></i>
+            Painel de gerenciamento de posts. Esta página não aparece no menu público.
+            <strong>Não compartilhe este link.</strong>
+        </div>
+
+        <!-- CONFIGURAÇÃO DA API -->
+        <section class="admin-secao" id="secaoConfig">
+            <div class="admin-secao-header">
+                <h2><i class="fas fa-cog" aria-hidden="true"></i> Configuração da API</h2>
+                <button class="admin-btn-toggle" id="btnToggleConfig" aria-expanded="true" aria-controls="configBody">
+                    <i class="fas fa-chevron-up"></i>
+                </button>
+            </div>
+            <div class="admin-secao-corpo" id="configBody">
+                <div class="admin-corpo-grupo">
+                    <label for="adminApiUrl">URL do Google Apps Script <span class="obrigatorio">*</span></label>
+                    <input type="url" id="adminApiUrl" name="adminApiUrl"
+                        placeholder="https://script.google.com/macros/s/SEU_ID/exec" autocomplete="off" maxlength="300"
+                        aria-describedby="apiUrlDica">
+                    <p class="admin-dica" id="apiUrlDica">
+                        <i class="fas fa-info-circle"></i>
+                        A URL fica salva no localStorage do seu navegador. Veja o README para como obtê-la.
+                    </p>
+                </div>
+                <div class="admin-campo-grupo">
+                    <label for="adminToken">Token de administração <span class="obrigatorio">*</span></label>
+                    <div class="input-senha-wrapper">
+                        <input type="password" id="adminToken" name="adminToken"
+                            placeholder="Token definido no Apps Script" autocomplete="off" maxlength="128">
+                        <button type="button" class="btn-ver-senha" id="btnVerToken" aria-label="Mostrar/ocultar token">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <p class="admin-dica">
+                        <i class="fas fa-info-circle"></i>
+                        O token nunca vai parar o servidor público - é enviado diretamente ao Apps Script via POST.
+                    </p>
+                </div>
+                <button class="admin-btn-salvar" id="btnSalvarConfig" type="button">
+                    <i class="fas fa-save"></i> Salvar configuração
+                </button>
+                <div class="admin-feedback" id="feedbackConfig" role="status" aria-live="polite"></div>
+            </div>
+        </section>
+
+        <!-- FORM: CRIAR / EDITAR POST -->
+        <section class="admin-secao" id="secaoEditor">
+            <div class="admin-secao-header">
+                <h2 id="editorTitulo"><i class="fas fa-pen" aria-hidden="true"></i> Novo Post</h2>
+                <div class="admin-header-acoes">
+                    <button class="admin-btn-secundario" id="btnNovoPost" type="button">
+                        <i class="fas fa-plus"></i> Limpar/ Novo
+                    </button>
+                    <button class="admin-btn-toggle" id="btnToggleEditor" aria-expanded="true"
+                        aria-controls="editorBody">
+                        <i class="fas fa-chevron-up"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="admin-secao-corpo" id="editorBody">
+                <form id="formPost" novalidate>
+                    <input type="hidden" id="postId" name="postId" value="">
+
+                    <!-- Titulo -->
+                    <div class="admin-campo-grupo">
+                        <label for="postTitulo">Título <span class="obrigatorio">*</span></label>
+                        <input type="text" id="postTitulo" name="postTitulo" placeholder="Título do post" required
+                            aria-required="true" maxlength="200" minlength="3">
+                        <p class="erro-texto" id="erroTitulo" role="alert">Título obrigatório (mínimo 3 caracteres).</p>
+                    </div>
+
+                    <!-- Tema -->
+                    <div class="admin-campo-grupo">
+                        <label for="postTema">Tema <span class="obrigatorio">*</span></label>
+                        <div class="admin-tema-wrapper">
+                            <select id="postTema" name="postTema" aria-describedby="temaOuNovoDica">
+                                <option value="">Selecione ou crie um tema...</option>
+                            </select>
+                            <span class="admin-ou">ou</span>
+                            <input type="text" id="novoTema" name="novoTema" placeholder="Novo tema..." maxlength="80"
+                                aria-label="Criar novo tema">
+                        </div>
+                        <p class="admin-dica" id="temaOuNovoDica">
+                            <i class="fas fa-info-circle"></i>
+                            Selecione um tema existente OU escreva um novo no campo ao lado.
+                        </p>
+                        <p class="erro-texto" id="erroTema" role="alert">Selecione ou crie um tema.</p>
+                    </div>
+
+                    <!-- Status -->
+                    <div class="admin-campo-grupo">
+                        <label for="postStatus">Status de publicação</label>
+                        <select id="postStatus" name="postStatus">
+                            <option value="publicado">✅ Publicado</option>
+                            <option value="rascunho">📝 Rascunho</option>
+                        </select>
+                    </div>
+
+                    <!-- Imagem de fundo -->
+                    <div class="admin-campo-grupo">
+                        <label for="imgFundo">Imagem de fundo (semi-transparente)</label>
+                        <div class="admin-upload-wrapper">
+                            <label class="admin-upload-btn" for="imgFundo">
+                                <i class="fas fa-image"></i> Escolher imagem
+                            </label>
+                            <input type="file" id="imgFundo" name="imgFundo" accept="image/jpeg,image/png,image/webp"
+                                aria-label="Selecionar imagem de fundo">
+                            <span class="admin-upload-name" id="nomeImgFundo">Nenhuma imagem</span>
+                            <button type="button" class="admin-upload-remover" id="removerImgFundo"
+                                style="display: none;" aria-label="Remover imagem de fundo">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="admin-preview-img" id="previewFundo" style="display: none;"
+                            aria-label="Pré-visualização do fundo">
+                            <img id="previewFundoImg" src="" alt="Pré-visualização do fundo">
+                        </div>
+                        <p class="admin-dica">
+                            <i class="fas fa-info-circle"></i>
+                            Tamanho máximo: 200 KB. A imagem será comprimida automaticamente e ficará com opacidade de
+                            8% no post.
+                        </p>
+                        <p class="erro-texto" id="erroImgFundo" role="alert"></p>
+                    </div>
+
+                    <!-- Imagem lateral -->
+                    <div class="admin-campo-grupo">
+                        <label for="imgLateral">Imagem lateral do post</label>
+                        <div class="admin-upload-wrapper">
+                            <label class="admin-upload-btn" for="imgLateral">
+                                <i class="fas fa-image"></i> Escolher imagem
+                            </label>
+                            <input type="file" id="imgLateral" name="imgLateral"
+                                accept="image/jpeg,image/png,image/webp" aria-label="Selecionar imagem lateral">
+                            <span class="admin-upload-name" id="nomeImgLateral">Nenhuma imagem</span>
+                            <button type="button" class="admin-upload-remover" id="removerImgLateral"
+                                style="display: none;" aria-label="Remover imagem lateral">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="admin-lado-wrapper">
+                            <label>
+                                <input type="radio" name="imgLado" value="esquerda" checked> Esquerda
+                            </label>
+                            <label>
+                                <input type="radio" name="imgLado" value="direita"> Direita
+                            </label>
+                        </div>
+                        <div class="admin-preview-img" id="previewLateral" style="display: none;"
+                            aria-label="pré-visualização da imagem laterla">
+                            <img id="previewLateral" src="" alt="Pré-visualização lateral">
+                        </div>
+                        <p class="admin-dica">
+                            <i class="fas fa-info-circle"></i>
+                            Tamanho máximo: 200 KB. Escolha se a imagem fica à esquerda ou à direita do texto.
+                        </p>
+                        <p class="erro-texto" id="erroImgLateral" role="alert"></p>
+                    </div>
+
+                    <!-- Conteúdo (editor simples) -->
+                    <div class="admin-campo-grupo">
+                        <label for="postConteudo">Conteúdo <span class="obrigatorio">*</span></label>
+                        <div class="admin-toolbar" role="toolbar" aria-label="Formatação de texto">
+                            <button type="button" class="toolbar-btn" data-cmd="bold" title="Negrito (Ctrl + B)"> <i
+                                    class="fas fa-bold"></i></button>
+                            <button type="button" class="toolbar-btn" data-cmd="italic" title="Itálico (Ctrl + I)"> <i
+                                    class="fas fa-italic"></i></button>
+                            <button type="button" class="toolbar-btn" data-cmd="underline"
+                                title="Sublinhado (Ctrl + U)"> <i class="fas fa-underline"></i></button>
+                            <span class="toolbar-sep" aria-hidden="true"></span>
+                            <button type="button" class="toolbar-btn" data-cmd="h2" title="Título H2"> <i
+                                    class="fas fa-heading"></i><sup>2</sup></button>
+                            <button type="button" class="toolbar-btn" data-cmd="h3" title="Título H3"> <i
+                                    class="fas fa-heading"></i><sup>3</sup></button>
+                            <span class="toolbar-sep" aria-hidden="true"></span>
+                            <button type="button" class="toolbar-btn" data-cmd="ul" title="Lista com marcadores"> <i
+                                    class="fas fa-list-ul"></i></button>
+                            <button type="button" class="toolbar-btn" data-cmd="ol" title="Lista numerada"> <i
+                                    class="fas fa-list-ol"></i></button>
+                            <button type="button" class="toolbar-btn" data-cmd="blockquote" title="Citação"> <i
+                                    class="fas fa-quote-tight"></i></button>
+                            <span class="toolbar-sep" aria-hidden="true"></span>
+                            <button type="button" class="toolbar-btn" data-cmd="link" title="Inserir link"> <i
+                                    class="fas fa-link"></i></button>
+                        </div>
+                        <div class="admin-editor-split">
+                            <div class="admin-editor-area" id="postConteudo" contenteditable="true" role="textbox"
+                                aria-multiline="true" aria-label="Conteúdo do post" aria-required="true"
+                                data-placeholder="Escreva o conteúdo do post aqui..."></div>
+                            <div class="admin-preview-area" id="previewConteudo" aria-label="pré-visualização do post">
+                            </div>
+                        </div>
+                        <p class="erro-texto" id="erroConteudo" role="alert">Conteúdo obrigatório.</p>
+                    </div>
+
+                    <!-- Ações -->
+                    <div class="admin-form-acoes">
+                        <button type="submit" class="admin-btn-publicar" id="btnPublicar">
+                            <i class="fas fa-paper-plane"></i> Publicar
+                        </button>
+                        <button type="button" class="admin-btn-rascunho" id="btnRascunho">
+                            <i class="fas fa-save"></i> Salvar como rascunho
+                        </button>
+                    </div>
+                    <div class="admin-feedback" id="feedbackPost" role="status" aria-live="polite"></div>
+                </form>
+            </div>
+        </section>
+
+        <!-- LISTA DE POSTS -->
+        <section class="admin-secao" id="secaoLista">
+            <div class="admin-secao-header">
+                <h2><i class="fas fa-list" aria-hidden="true"></i> Posts Existentes</h2>
+                <div class="admin-header-acoes">
+                    <input type="search" id="adminBusca" placeholder="Buscar posts..." maxlength="100"
+                        autocomplete="off" aria-label="Buscar posts para editar">
+                    <select id="adminFiltroStatus" aria-label="Filtrar por Status">
+                        <option value="">Todos</option>
+                        <option value="publicado">Publicados</option>
+                        <option value="rascunho">Rascunhos</option>
+                    </select>
+                </div>
+            </div>
+            <div class="admin-secao-corpo" id="listaPostsCorpo">
+                <div class="admin-feedback" id="feedbackLista" role="status" aria-live="polite">Carregando posts...
+                </div>
+                <table class="admin-tabela" id="tabelaPosts" aria-label="Lista de posts">
+                    <thead>
+                        <tr>
+                            <th scope="col">Título</th>
+                            <th scope="col">Tema</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Data</th>
+                            <th scope="col" class="col-reacoes">👍/👎</th>
+                            <th scope="col" class="col-acoes">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaPostsBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p data-config="copyright">© 2026 Mariah Katharine. Todos os direitos reservados.</p>
+        <div class="flex-row">
+            <a class="btn-voltar" href="homepage.html"><i class="fas fa-arrow-left"></i> Voltar ao início</a>
+    </footer>
+
+    <button class="btn-topo" id="btnTopo" aria-label="Voltar ao topo da página" title="Voltar ao topo">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/admin.js"></script>
+
+</body>
+
+</html>

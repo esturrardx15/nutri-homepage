@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Nutricionista Mariah Katharine (CRN 35446) - Acompanhamento nutricional personalizado para promover saúde e bem-estar. Agende sua consulta hoje!">
+    <meta name="theme-color" content="#1c3a0d">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <!-- SEGURANÇA: Content Security Policy - Bloqueia scripts/estilos de origens nao autorizadas -->
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src https://cdnjs.cloudflare.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/">
+    <meta property="og:title" content="Nutricionista Mariah Katharine">
+    <meta property="og:description"
+        content="Acompanhamento nutricional personalizado, presencial e online, para promover saúde e bem-estar. Agende sua consulta hoje!">
+    <meta property="og:image" content="../../img/baner.jpg">
+    <meta property="og:locale" content="pt_BR">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Nutricionista Mariah Katharine">
+    <meta name="twitter:description"
+        content="Acompanhamento nutricional personalizado, presencial e online, para promover saúde e bem-estar. Agende sua consulta hoje!">
+    <title>Mariah (Maia) Katharine - Nutricionista</title>
+    <link rel="icon"
+        href="data:image/svg+xml, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥑</text></svg>">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/homepage.css">
+    <!-- Structured Data (JSON-LD) para SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HealthBusiness",
+        "name": "Nutricionista",
+        "description": "Acompanhamento nutricional personalizado, presencial e online.",
+        "url": "/",
+        "priceRange": "$$"
+    }
+    </script>
+</head>
+
+<body>
+
+    <!-- Skip to content (acessibilidade: Tab para pular navegação) -->
+    <a class="skip-link" href="#sobre">Pular para o conteúdo</a>
+
+    <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+    <header>
+        <h1 data-config="nome-completo">Mariah Katharine - Maia Nutri</h1>
+        <!-- Hamburger menu (mobile) -->
+        <button class="hamburger" id="btnHamburger" aria-label="Abrir menu de navegação" aria-expanded="false">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-times"></i>
+        </button>
+        <!-- Toggle de tema claro/escuro -->
+        <button class="btn-tema" id="btnTema" aria-label="Alternar tema claro/escuro" title="Alterar tema">
+            <i class="fas fa-moon" aria-hidden="true"></i>
+            <i class="fas fa-sun" aria-hidden="true"></i>
+        </button>
+        <nav id="navPrincipal" aria-label="Navegação principal">
+            <a href="#sobre">Sobre</a>
+            <a href="#servicos">Serviços</a>
+            <a href="#depoimentos">Depoimentos</a>
+            <a href="#faq">FAQ</a>
+            <a href="#contato">Contato</a>
+            <a href="#blog-destaques">Blog</a>
+            <a class="btn-whatsapp-nav" data-link="whatsapp" data-whatsapp-context="geral" href="#"
+                aria-label="Abrir WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+        </nav>
+    </header>
+
+    <main>
+
+        <div class="hero-banner" id="heroBanner">
+            <img src="../../img/baner.jpg" class="hero-img" alt="Banner - Alimentação saudável e equilibrada"
+                width="216" height="121" data-fallback="next">
+            <div class="hero-foto-placeholder" style="display: none;">
+                <i class="fas fa-image"></i>
+                <span>Foto do Banner</span>
+            </div>
+            <div class="hero-conteudo">
+                <h2>Alimentação saudável para uma vida melhor</h2>
+                <p>Acompanhamento nutricional personalizado, humanizado e com foco em resultados reais.</p>
+                <a class="btn-hero" href="#contato">Agendar minha consulta</a>
+            </div>
+        </div>
+
+        <!-- === SOBRE MIM === -->
+        <section id="sobre">
+            <div class="section-header">
+                <h2>Sobre mim</h2>
+                <div class="flex-row">
+                    <a class="btn-instagram" data-link="instagram" href="#" aria-label="Instagram da nutricionista">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="btn-whatsapp" data-link="whatsapp" href="#" aria-label="WhatsApp da nutricionista">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="carrossel" aria-label="Galeria de fotos" role="region">
+                <div class="carrossel-track">
+                    <!-- Imagens geradas dinamicamente via CONFIG.carrossel (script.js) -->
+                </div>
+                <button class="carrossel-prev" aria-label="Foto anterior"><i class="fas fa-chevron-left"></i></button>
+                <button class="carrossel-next" aria-label="Próxima foto"><i class="fas fa-chevron-right"></i></button>
+                <div class="carrossel-dots" role="tablist" aria-label="Indicadores do carrossel"></div>
+            </div>
+            <p>Sou nutricionista dedicada a Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit perferendis
+                aliquam quis, necessitatibus magnam illo dolor dolore architecto, rerum cum ratione earum illum
+                temporibus odit nobis debitis libero minus rem a, praesentium beatae hic? Consequatur fugit sunt eum
+                velit non distinctio. Quis quaerat vero non esse recusandae tenetur veritatis ullam!</p>
+        </section>
+
+        <!-- === SERVIÇOS === -->
+        <section id="servicos">
+            <div class="section-header">
+                <h2>Serviços</h2>
+            </div>
+            <div class="servicos">
+                <article class="servico">
+                    <h3>Consulta Nutricional</h3>
+                    <p>Avaliação completa e plano alimentar individualizado.</p>
+                </article>
+                <article class="servico">
+                    <h3>Reeducação Alimentar</h3>
+                    <p>Programa personalizado para mudanças de hábitos duradouras.</p>
+                </article>
+                <article class="servico">
+                    <h3>Atendimento Online</h3>
+                    <p>Consultas via videochamada para sua comodidade.</p>
+                </article>
+            </div>
+            <div class="flex-between mt-1">
+                <a class="link-ver-todos" href="servicos.html">Ver todos os serviços completos -></a>
+                <a class="btn-whatsapp" data-link="whatsapp" href="#" aria-label="Agendar consulta via WhatsApp">
+                    <i class="fab fa-whatsapp"></i> Agende uma consulta
+                </a>
+            </div>
+        </section>
+
+        <!-- BLOG DESTAQUES -->
+         <section id="blog-destaques">
+            <div class="section-header">
+                <h2><i class="fas fa-blog" aria-hidden="true"></i> Blog</h2>
+            </div>
+            <p class="texto-medio">Configura os posts mais curtidos sobre nutrição e saúde:</p>
+            <div class="blog-destaques-grid" id="blogDestaquesGrid">
+                <!-- Preenchimento via JS -->
+            </div>
+            <div class="flex-between mt-1">
+                <a class="link-ver-todos" href="blog.html">Ver todos os posts -></a>
+                <a class="btn-whatsapp" data-link="whatsapp" href="#" aria-label="Agendar consulta via WhatsApp">
+                    <i class="fab fa-whatsapp"></i> Agende uma consulta
+                </a>
+            </div>
+         </section>
+
+        <!-- === DEPOIMENTOS === -->
+        <section id="depoimentos">
+            <div class="section-header">
+                <h2>Depoimentos</h2>
+                <a class="btn-whatsapp" data-link="whatsapp" data-whatsapp-context="depoimento" href="#"
+                    aria-label="Quero começar via WhatsApp">
+                    <i class="fab fa-whatsapp"></i> Quero Começar
+                </a>
+            </div>
+            <!-- Carrossel de depoimentos -->
+            <div class="depoimentos-carrossel" role="region" aria-label="Depoimentos de clientes">
+                <div class="depoimentos-track">
+                    <article class="depoimento">
+                        <div class="depoimento-header">
+                            <img src="../../img/depoimento-ana.png" class="depoimento-foto" alt="Foto da cliente Ana"
+                                width="48" height="48" loading="lazy" data-fallback="hide">
+                            <strong>Ana P.</strong>
+                        </div>
+                        <p>"A Mariah me ajudou a transformar minha relação com a comida. Com seu acompanhamento,
+                            consegui alcançar meus objetivos de forma saudável e sustentável. Super recomendo!"</p>
+                    </article>
+                    <article class="depoimento">
+                        <div class="depoimento-header">
+                            <div class="depoimento-avatar" aria-hidden="true">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <strong>Carlos M.</strong>
+                        </div>
+                        <p>"Excelente profissional! O acompanhamento é personalizado e os resultados são incríveis."</p>
+                    </article>
+                    <article class="depoimento">
+                        <div class="depoimento-header">
+                            <div class="depoimento-avatar" aria-hidden="true">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <strong>Beatriz L.</strong>
+                        </div>
+                        <p>"Recomendo a Mariah para quem busca uma mudança de vida através da alimentação."</p>
+                    </article>
+                    <article class="depoimento">
+                        <div class="depoimento-header">
+                            <div class="depoimento-avatar" aria-hidden="true">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <strong>Beatriz L1.</strong>
+                        </div>
+                        <p>"Recomendo a Mariah para quem busca uma mudança de vida através da alimentação."</p>
+                    </article>
+                    <article class="depoimento">
+                        <div class="depoimento-header">
+                            <div class="depoimento-avatar" aria-hidden="true">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <strong>Beatriz L2.</strong>
+                        </div>
+                        <p>"Recomendo a Mariah para quem busca uma mudança de vida através da alimentação."</p>
+                    </article>
+                    <article class="depoimento">
+                        <div class="depoimento-header">
+                            <div class="depoimento-avatar" aria-hidden="true">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <strong>Beatriz L3.</strong>
+                        </div>
+                        <p>"Recomendo a Mariah para quem busca uma mudança de vida através da alimentação."</p>
+                    </article>
+                    <article class="depoimento">
+                        <div class="depoimento-header">
+                            <div class="depoimento-avatar" aria-hidden="true">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <strong>Beatriz L4.</strong>
+                        </div>
+                        <p>"Recomendo a Mariah para quem busca uma mudança de vida através da alimentação."</p>
+                    </article>
+                </div>
+                <button class="dep-prev" aria-label="Depoimento anterior"><i class="fas fa-chevron-left"></i></button>
+                <button class="dep-next" aria-label="Próximo depoimento"><i class="fas fa-chevron-right"></i></button>
+                <div class="dep-dots" role="tablist" aria-label="Indicadores de depoimentos"></div>
+            </div>
+        </section>
+
+        <!-- === FAQ === -->
+        <section id="faq">
+            <div class="section-header">
+                <h2>Perguntas Frequentes</h2>
+            </div>
+            <div class="faq-item"><button class="faq-pergunta" id="faq-p1" aria-expanded="false"
+                    aria-controls="faq-r1">Como funciona a primeira consulta? <i
+                        class="fas fa-chevron-down"></i></button>
+                <div class="faq-resposta" id="faq-r1" role="region" aria-labelledby="faq-p1">
+                    Na primeira consulta, realizamos uma avaliação completa do seu histórico de saúde, hábitos
+                    alimentares e objetivos. A partir disso, elaboramos um plano alimentar personalizado para você.
+                </div>
+            </div>
+
+            <div class="faq-item"><button class="faq-pergunta" id="faq-p2" aria-expanded="false"
+                    aria-controls="faq-r2">Quais são as formas de atendimento? <i
+                        class="fas fa-chevron-down"></i></button>
+                <div class="faq-resposta" id="faq-r2" role="region" aria-labelledby="faq-p2">
+                    Oferecemos atendimentos presenciais e online, para que você possa escolher a opção que melhor se
+                    encaixa na sua rotina.
+                </div>
+            </div>
+
+            <div class="faq-item"><button class="faq-pergunta" id="faq-p3" aria-expanded="false"
+                    aria-controls="faq-r3">Qual o valor das consultas? <i class="fas fa-chevron-down"></i></button>
+                <div class="faq-resposta" id="faq-r3" role="region" aria-labelledby="faq-p3">
+                    O valor das consultas varia de acordo com o tipo de atendimento e a duração. Entre em contato pelo
+                    Whatsapp/Instagram para saber os valores atualizados e as formas de pagamento aceitas.
+                </div>
+            </div>
+
+            <div class="faq-item"><button class="faq-pergunta" id="faq-p4" aria-expanded="false"
+                    aria-controls="faq-r4">Preciso fazer exames antes da consulta? <i
+                        class="fas fa-chevron-down"></i></button>
+                <div class="faq-resposta" id="faq-r4" role="region" aria-labelledby="faq-p4">
+                    Não é obrigatório, mas é recomendado trazer resultados de exames recentes para uma avaliação mais
+                    completa. Caso não tenha, podemos solicitar os exames necessários durante a consulta.
+                </div>
+            </div>
+
+            <div class="faq-item"><button class="faq-pergunta" id="faq-p5" aria-expanded="false"
+                    aria-controls="faq-r5">Você trabalha com dietas restritivas? <i
+                        class="fas fa-chevron-down"></i></button>
+                <div class="faq-resposta" id="faq-r5" role="region" aria-labelledby="faq-p5">
+                    Não. Meu trabalho é focado em reeducação alimentar e mudanças de hábitos, sem restrições severas ou
+                    dietas da moda. O objetivo é promover uma relação saudável com a comida e resultados sustentáveis a
+                    longo prazo.
+                </div>
+            </div>
+        </section>
+
+        <!-- === CONTATO === -->
+        <section id="contato">
+            <div class="section-header">
+                <h2>Contato</h2>
+                <div class="flex-row">
+                    <a class="btn-whatsapp" data-link="whatsapp" href="#" aria-label="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                        WhatsApp</a>
+                </div>
+            </div>
+            <p class="texto-medio">Ou envie um e-mail diretamente pelo formulario abaixo:</p>
+
+            <form class="contato-form" id="formContato" novalidate>
+                <div class="campo-grupo">
+                    <label for="nome">Nome <span class="obrigatorio">*</span></label>
+                    <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required
+                        aria-required="true" autocomplete="name" maxlength="100" minlength="5">
+                    <p class="erro-texto" id="erroNome" role="alert">Por favor, digite seu nome.</p>
+                </div>
+
+                <div class="campo-grupo">
+                    <label for="email">E-mail <span class="obrigatorio">*</span></label>
+                    <input type="email" id="email" name="email" placeholder="nome@email.com" required
+                        aria-required="true" autocomplete="email" maxlength="200">
+                    <p class="erro-texto" id="erroEmail" role="alert">Por favor, digite um e-mail válido (ex.:
+                        nome@email.com).</p>
+                </div>
+
+                <div class="campo-grupo">
+                    <label for="assunto">Assunto</label>
+                    <input type="text" id="assunto" name="assunto" placeholder="Ex: Agendar consulta"
+                        autocomplete="off" maxlength="200">
+                </div>
+
+                <!-- SEGURANÇA: Honeypot anti-spam (invisível para humanos, bots preenchem) -->
+                <div class="campo-grupo campo-hp" aria-hidden="true" tabindex="-1">
+                    <label for="website">Website</label>
+                    <input type="text" id="website" name="website" autocomplete="off" tabindex="-1">
+                </div>
+                <div class="campo-grupo">
+                    <label for="mensagem">Mensagem <span class="obrigatorio">*</span></label>
+                    <textarea rows="4" id="mensagem" name="mensagem" placeholder="Escreva sua mensagem aqui..." required
+                        aria-required="true" maxlength="2000" minlength="5"></textarea>
+                    <div class="char-counter" id="charCounter" aria-live="polite">0 / 2000</div>
+                    <p class="erro-texto" id="erroMensagem" role="alert">Por favor, escreva sua mensagem (mínimo 5 caracteres).</p>
+                </div>
+                <div class="form-acoes">
+                    <button type="submit" id="btnEnviar">
+                        <i class="fas fa-paper-plane"></i> Enviar E-mail
+                    </button>
+                </div>
+                <div class="msg-sucesso" id="msgSucesso" role="status">
+                    Seu cliente de e-mail foi aberto com a mensagem pronta. Basta enviar!
+                </div>
+            </form>
+        </section>
+
+    </main>
+
+    <footer>
+        <p data-config="copyright">© 2026 Mariah Katharine. Todos os direitos reservados.</p>
+        <div class="flex-row">
+            <a class="btn-instagram" data-link="instagram" href="#" aria-label="Instagram"><i
+                    class="fab fa-instagram"></i>Instagram</a>
+            <a class="btn-whatsapp" data-link="whatsapp" href="#" aria-label="WhatsApp"><i
+                    class="fab fa-whatsapp"></i>Whatsapp</a>
+        </div>
+    </footer>
+
+    <!-- Whatsapp flutuante (sempre visivel)-->
+    <a class="whatsapp-flutuante" data-link="whatsapp" href="#" aria-label="Fale conosco pelo Whatsapp">
+        <i class="fab fa-whatsapp"></i>
+        <button class="wpp-close" aria-label="Fechar botão Whatsapp" title="Fechar">x</button>
+    </a>
+
+    <button class="btn-topo" id="btnTopo" aria-label="Voltar ao topo da página" title="Voltar ao topo">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- JS compartilhado (auto-inicialização via DOMContentLoaded - sem inline scripts)-->
+    <script src="../js/script.js"></script>
+</body>
+</html>

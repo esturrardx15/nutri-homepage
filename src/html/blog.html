@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Blog de Nutrição - dicas, receitas e artigos de saúde da Nutricionista Mariah Katharine.">
+    <meta name="theme-color" content="#1c3a0d">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <!-- SEGURANÇA: CSP do admin -->
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src https://cdnjs.cloudflare.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/blog">
+    <meta property="og:title" content="Blog - Nutricionista Mariah Katharine">
+    <meta property="og:description" content="Dicas, receitas e artigos de saúde nutricional.">
+    <meta property="og:image" content="../../img/imagem.png">
+    <meta property="og:locale" content="pt_BR">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Blog - Nutricionista Mariah Katharine">
+    <meta name="twitter:description" content="Dicas, receitas e artigos de saúde nutricional.">
+    <title>Blog - Nutricionista Mariah Katharine</title>
+    <link rel="icon"
+        href="data:image/svg+xml, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥑</text></svg>">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/blog.css">
+    <!-- JSON-LD: Blog -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "name": "Blog da Nutricionista",
+        "description": "Dicas, receitas e artigos de saúde nutricional.",
+        "url": "/blog"
+    }
+    </script>
+</head>
+
+<body>
+
+    <!-- Skip to content -->
+
+    <a class="skip-link" href="#blog-grid">Pular para os posts</a>
+
+    <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+    <header>
+        <h1>Blog de Nutrição</h1>
+        <p>Dicas, receitas e artigos para uma vida mais saudável</p>
+        <button class="hamburger" id="btnHamburger" aria-label="Abrir menu de navegação" aria-expanded="false">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-times"></i>
+        </button>
+        <button class="btn-tema" id="btnTema" aria-label="Alternar tema claro/escuro" title="Alternar tema">
+            <i class="fas fa-moon" aria-hidden="true"></i>
+            <i class="fas fa-sun" aria-hidden="true"></i>
+        </button>
+        <nav id="navPrincipal" aria-label="Navegação do blog">
+            <a class="btn-voltar" href="homepage.html"><i class="fas fa-arrow-left"></i> Início</a>
+            <a href="servicos.html"> Serviços</a>
+            <a class="btn-whatsapp-nav" data-link="whatsapp" data-whatsapp-context="geral" href="#"
+                aria-label="Abrir WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+        </nav>
+    </header>
+
+    <main class="blog-layout">
+
+        <!-- COLUNA PRINCIPAL -->
+        <section class="blog-main" aria-label="Lista de posts">
+
+            <!-- Barra de busca -->
+            <div class="blog-busca">
+                <label for="campoBusca" class="sr-only">Buscar posts</label>
+                <div class="busca-wrapper">
+                    <i class="fas fa-search busca-icon" aria-hidden="true"></i>
+                    <input type="search" id="campoBusca" name="q"
+                        placeholder="Buscar posts, temas ou palavras-chaves..." autocomplete="off" maxlength="100"
+                        aria-label="Buscar posts">
+                    <button class="busca-limpar" id="btnLimpaBusca" aria-label="Limpar busca" style="display: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Indicador de estado -->
+            <div class="blog-estado" id="blogEstado" aria-live="polite" aria-atomic="true"></div>
+
+            <!-- Grid de cards -->
+            <div class="blog-grid" id="blog-grid" aria-label="Posts do blog">
+                <!-- Skeleton de carregamento -->
+                <div class="post-skeleton" aria-hidden="true"></div>
+                <div class="post-skeleton" aria-hidden="true"></div>
+                <div class="post-skeleton" aria-hidden="true"></div>
+                <div class="post-skeleton" aria-hidden="true"></div>
+                <div class="post-skeleton" aria-hidden="true"></div>
+                <div class="post-skeleton" aria-hidden="true"></div>
+            </div>
+
+            <!-- Paginação -->
+            <nav class="blog-paginacao" id="blogPaginacao" aria-label="Paginação do blog"></nav>
+        </section>
+
+        <!-- SIDEBAR -->
+        <aside class="blog-sidebar" aria-label="Filtros e temas">
+
+            <!-- Filtro de temas -->
+            <div class="sidebar-card" id="sidebarTemas">
+                <div class="sidebar-card-header">
+                    <h2><i class="fas fa-tags" aria-hidden="true"></i> Temas</h2>
+                    <div class="sidebar-ordenar">
+                        <label for="ordenarTemas" class="sr-only"> Ordenar temas por</label>
+                        <select id="ordenarTemas" aria-label="Ordenar temas">
+                            <option value="alfabetico">A-Z</option>
+                            <option value="data">Mais recente</option>
+                            <option value="quantidade">Mais posts</option>
+                        </select>
+                    </div>
+                </div>
+                <ul class="temas-lista" id="temasLista" role="list">
+                    <li><span class="tema-skeleton" aria-hidden="true"></span></li>
+                    <li><span class="tema-skeleton" aria-hidden="true"></span></li>
+                    <li><span class="tema-skeleton" aria-hidden="true"></span></li>
+                </ul>
+            </div>
+
+            <!-- Posts recentes -->
+            <div class="sidebar-card" id="sidebarRecentes">
+                <h2><i class="fas fa-clock" aria-hidden="true"></i> Posts Recentes</h2>
+                <ul class="recentes-lista" id="recentesLista" role="list">
+                    <li><span class="tema-skeleton" aria-hidden="true"></span></li>
+                    <li><span class="tema-skeleton" aria-hidden="true"></span></li>
+                </ul>
+            </div>
+
+        </aside>
+
+    </main>
+
+    <footer>
+        <div class="flex-row">
+            <a class="btn-voltar" href="homepage.html"><i class="fas fa-arrow-left"></i> Voltar ao início</a>
+            <p data-config="copyright">© 2026 Mariah Katharine. Todos os direitos reservados.</p>
+        </div>
+        <div class="flex-row">
+            <a class="btn-instagram" data-link="instagram" href="#" aria-label="Instagram"><i
+                    class="fab fa-instagram"></i>Instagram</a>
+            <a class="btn-whatsapp" data-link="whatsapp" href="#" aria-label="WhatsApp"><i
+                    class="fab fa-whatsapp"></i>Whatsapp</a>
+        </div>
+    </footer>
+
+    <!-- Whatsapp flutuante - contexto do post -->
+    <a class="whatsapp-flutuante" data-link="whatsapp" data-whatsapp-context="geral" href="#"
+        aria-label="Fale conosco pelo Whatsapp">
+        <i class="fab fa-whatsapp"></i>
+        <button class="wpp-close" aria-label="Fechar botão Whatsapp" title="Fechar">x</button>
+    </a>
+
+    <button class="btn-topo" id="btnTopo" aria-label="Voltar ao topo da página" title="Voltar ao topo">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/blog.js"></script>
+
+</body>

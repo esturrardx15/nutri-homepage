@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Post do Blog - Nutricionista Mariah Katharine">
+    <meta name="theme-color" content="#1c3a0d">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <!-- SEGURANÇA: CSP do admin -->
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src https://cdnjs.cloudflare.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="/blog/post">
+    <meta property="og:title" content="Post - Blog Nutricionista">
+    <meta property="og:description" content="Leia mais sobre nutrição e saúde.">
+    <meta property="og:image" content="../../img/imagem.png">
+    <meta property="og:locale" content="pt_BR">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Post - Blog Nutricionista">
+    <meta name="twitter:description" content="Leia mais sobre nutrição e saúde.">
+    <title>Post - Blog Nutricionista</title>
+    <link rel="icon"
+        href="data:image/svg+xml, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥑</text></svg>">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/blog.css">
+    <!-- JSON-LD: BlogPosting - preenchido dinamicamente plo blog.js -->
+    <script type="application/ld+json" id="jsonLdPost">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting" }
+    </script>
+</head>
+
+<body>
+
+    <!-- Skip to content-->
+    <a class="skip-link" href="#post-conteudo">Pular para o conteúdo do post</a>
+
+    <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+    <header>
+        <h1 id="postTituloHeader">Blog de Nutrição</h1>
+        <button class="hamburger" id="btnHamburger" aria-label="Abrir menu de navegação" aria-expanded="false">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-times"></i>
+        </button>
+        <button class="btn-tema" id="btnTema" aria-label="Alternar tema claro/escuro" title="Alternar tema">
+            <i class="fas fa-moon" aria-hidden="true"></i>
+            <i class="fas fa-sun" aria-hidden="true"></i>
+        </button>
+        <nav id="navPrincipal" aria-label="Navegação do post">
+            <a class="btn-voltar" href="blog.html"><i class="fas fa-arrow-left"></i> Blog</a>
+            <a href="homepage.html"> Início</a>
+            <a href="servicos.html"> Serviços</a>
+            <a class="btn-whatsapp-nav" data-link="whatsapp" data-whatsapp-context="geral" href="#"
+                aria-label="Abrir WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+        </nav>
+    </header>
+
+    <main class="post-layout">
+
+        <!-- COLUNA DO POST -->
+        <article class="post-artigo" id="post-conteudo" aria-label="Conteúdo do post">
+
+            <!-- Estado de carregamento -->
+            <div class="post-carregando" id="postCarregando" aria-live="polite">
+                <div class="post-skeleton-titulo" aria-hidden="true"></div>
+                <div class="post-skeleton-meta" aria-hidden="true"></div>
+                <div class="post-skeleton-corpo" aria-hidden="true"></div>
+            </div>
+
+            <!-- Conteúdo do post (preenchido pelo JS) -->
+            <div class="post-conteudo-wrapper" id="postConteudoWrapper" style="display: none;">
+
+                <!-- Imagem de fundo (semi-transparente) -->
+                <div class="post-fundo-img" id="postFundoImg" aria-hidden="true"></div>
+
+                <!-- Cabeçalho do post -->
+                <header class="post-header">
+                    <div class="post-meta-topo">
+                        <span class="post-tema-badge" id="postTemaBadge"></span>
+                        <span class="post-data" id="postData"></span>
+                        <span class="post-tempo-leitura" id="postTempoLeitura">
+                            <i class="fas fa-clock" aria-hidden="true"></i>
+                            <span></span>
+                        </span>
+                    </div>
+                    <h1 class="post-titulo" id="postTitulo"></h1>
+                    <p class="post-autor">
+                        <i class="fas fa-user" aria-hidden="true"></i>
+                        <span id="postAutor"></span>
+                    </p>
+                </header>
+
+                <!-- Layout com imagem lateral opcional -->
+                <div class="post-corpo-layout" id="postCorpoLayout">
+                    <!-- Imagem lateral (injetada pelo JS se existir) -->
+                    <div class="post-img-lateral" id="postImgLateral" style="display: none;">
+                        <img id="postImgLateralEl" src="" alt="" loading="lazy">
+                    </div>
+                    <!-- Texto do psot -->
+                    <div class="post-texto" id="postTexto"></div>
+                </div>
+
+                <!-- Reações (likes) -->
+                <div class="post-reacoes" aria-label="Reagir ao post">
+                    <button class="btn-reacao btn-like" id="btnLike" aria-label="Curtir este post" aria-pressed="false">
+                        <i class="fas fa-thumbs-up" aria-hidden="true"></i>
+                        <span class="reacao-count" id="likeCount">0</span>
+                    </button>
+                    <button class="btn-copiar-link" id="btnCopiarLink" aria-label="Copiar link do post">
+                        <i class="fas fa-link" aria-hidden="true"></i>
+                        <span>Copiar link</span>
+                    </button>
+                    <a class="btn-compartilhar-wpp" id="btnCompartilharWpp" href="#" target="_blank"
+                        rel="noopener noreferrer" aria-label="Compartilhar no Whatsapp">
+                        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                        <span>Compartilhar</span>
+                    </a>
+                </div>
+
+                <!-- Whatsapp contextual do post -->
+                 <div class="post-cta-wpp">
+                    <p>Gostou do post? Agende uma consulta e receba um plano alimentar personalizado!</p>
+                    <a class="btn-whatsapp" id="btnWppPost" data-link="whatsapp" data-whatsapp-context="blog" href="#" aria-label="Agendar via Whatsapp">
+                        <i class="fab fa-whatsapp" aria-hidden="true"></i> Agendar consulta
+                    </a>
+                 </div>
+
+                 <!-- Posts relacionados -->
+                  <section class="posts-relacionados" id="postsRelacionados" aria-label="Posts relacionados">
+                    <h2><i class="fas fa-book-open" aria-hidden="true"></i> Posts Relacionados</h2>
+                    <div class="relacionados-grid" id="relacionadosGrid"></div>
+                  </section>
+                  
+            </div>
+
+            <!-- Erro de carregamento -->
+             <div class="post-erro" id="postErro" style="display: none;">
+                <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+                <p>Post não encontrado ou erro ao carregar.</p>
+                <a class="btn-whatsapp" href="blog.html"><i class="fas fa-arrow-left"></i> Voltar ao blog</a>
+             </div>
+
+        </article>
+    </main>
+
+    <footer>
+        <div class="flex-row">
+            <a class="btn-voltar" href="blog.html"><i class="fas fa-arrow-left"></i> Voltar ao blog</a>
+            <p data-config="copyright">© 2026 Mariah Katharine. Todos os direitos reservados.</p>
+        </div>
+       <div class="flex-row">
+            <a class="btn-instagram" data-link="instagram" href="#" aria-label="Instagram"><i
+                    class="fab fa-instagram"></i>Instagram</a>
+            <a class="btn-whatsapp" data-link="whatsapp" href="#" aria-label="WhatsApp"><i
+                    class="fab fa-whatsapp"></i>Whatsapp</a>
+        </div>
+    </footer>
+
+    <!-- Whatsapp flutuante - contexto do post -->
+    <a class="whatsapp-flutuante" id="wppFlutuantePost" data-link="whatsapp" data-whatsapp-context="blog" href="#" aria-label="Fale conosco pelo Whatsapp">
+        <i class="fab fa-whatsapp"></i>
+        <button class="wpp-close" aria-label="Fechar botão Whatsapp" title="Fechar">x</button>
+    </a>
+
+    <button class="btn-topo" id="btnTopo" aria-label="Voltar ao topo da página" title="Voltar ao topo">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/blog.js"></script>
+
+</body>
+
+</html>

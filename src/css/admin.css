@@ -1,0 +1,555 @@
+/*
+admin.css - CSS do Painel Administrativo 
+
+1. LAYOUT ADMIN
+*/
+
+.admin-layout{
+    max-width: 1100px;
+    margin: 1.5rem auto 3rem auto;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* 2. AVISO */
+
+.admin-aviso {
+    background: linear-gradient(90deg, var(--caroco-marrom), var(--caroco-claro));
+    color: #fff;
+    padding: 0.7rem 1.2rem;
+    border-radius: var(--radius-md);
+    font-size: 0.88rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+/* 3. SEÇÕES DO ADMIN */
+
+.admin-secao {
+    background: var(--creme);
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 18px var(--sombra-leve);
+    overflow: hidden;
+}
+
+.admin-secao-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.4rem;
+    background: var(--verde-card);
+    border-bottom: 2px solid var(--polpa-clara);
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.admin-secao-header h2 {
+    font-size: 1.05rem;
+    margin: 0;
+    color: var(--casca-media);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.admin-secao-corpo {
+    padding: 1.4rem;
+}
+
+.admin-btn-toggle {
+    background: none;
+    border: none;
+    color: var(--casca-media);
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.3rem;
+    border-radius: var(--radius-sm);
+    transition: transform var(--transition-fast), background var(--transition-fast);
+}
+
+.admin-btn-toggle:hover {
+    background: var(--polpa-clara);
+}
+
+.admin-btn-toggle.fechado i {
+    transform: rotate(180deg);
+}
+
+.admin-header-acoes {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.admin-header-acoes input[type="search"],
+.admin-header-acoes select {
+    padding: 0.4rem 0.7rem;
+    border: 1px solid var(--polpa-clara);
+    border-radius: var(--radius-sm);
+    background: var(--creme);
+    color: var(--texto-escuro);
+    font-size: 0.85rem;
+    font-family: inherit;
+}
+
+/* 4. CAMPOS DO FORMULÁRIO */
+
+.admin-campo-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1.2rem;
+}
+
+.admin-campo-grupo label {
+    font-weight: bold;
+    font-size: 0.88rem;
+    color: var(--casca-media);
+}
+
+.admin-campo-grupo input[type="text"],
+.admin-campo-grupo input[type="url"],
+.admin-campo-grupo input[type="password"],
+.admin-campo-grupo select {
+    padding: 0.6rem 0.8rem;
+    border: 1.5px solid var(--polpa-clara);
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    font-family: inherit;
+    background: var(--creme);
+    color: var(--texto-escuro);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    width: 100%;
+}
+
+.admin-campo-grupo input:focus,
+.admin-campo-grupo select:focus {
+    border-color: var(--casca-media);
+    box-shadow: 0 0 0 3px rgba(45,90,27,0.15);
+    outline: none;
+}
+
+.admin-dica {
+    font-size: 0.78rem;
+    color: var(--texto-medio);
+    margin: 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.35rem;
+}
+
+.admin-dica i {
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.input-senha-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-senha-wrapper input {
+    flex: 1;
+    padding-right: 2.5rem;
+}
+
+.btn-ver-senha {
+    position: absolute;
+    right: 0.6rem;
+    background: none;
+    border: none;
+    color: var(--texto-medio);
+    cursor: pointer;
+    padding: 0.25rem;
+    transition: color var(--transition-fast);
+}
+
+.btn-ver-senha:hover {
+    color: var(--casca-media);
+}
+
+/* 5. TEMA SELECT + NOVO TEMA */
+
+.admin-tema-wrapper {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.admin-tema-wrapper select,
+.admin-tema-wrapper input {
+    flex: 1 1 160px;
+}
+
+.admin-ou {
+    font-size: 0.8rem;
+    color: var(--texto-medio);
+    white-space: nowrap;
+}
+
+/* 6. UPLOAD DE IMAGENS */
+
+.admin-upload-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.admin-upload-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.9rem;
+    background: var(--casca-media);
+    color: #fff;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: bold;
+    transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.admin-upload-btn:hover {
+    background: var(--casca-escura);
+    transform: scale(1.04);
+}
+
+.admin-campo-grupo input[type="file"] {
+    position: absolute;    
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.admin-upload-nome {
+    font-size: 0.82rem;
+    color: var(--texto-medio);
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.admin-upload-remover {
+    background: none;
+    border: none;
+    color: #c0392b;
+    cursor: pointer;
+    padding: 0.2rem 0.4rem;
+    font-size: 0.9rem;
+    transition: transform var(--transition-fast);
+    border-radius: var(--radius-sm);
+}
+
+.admin-upload-remover:hover {
+    background: #fce8e6;
+    transform: scale(1.1);
+}   
+
+.admin-preview-img {
+    margin-top: 0.6rem;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    max-width: 300px;
+    box-shadow: 0 2px 8px var(--sombra-leve);
+}
+
+.admin-preview-img img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    display: block;
+}
+
+.admin-lado-wrapper {
+    display: flex;
+    gap: 1.2rem;
+    margin-top: 0.3rem;
+    font-size: 0.9rem;
+    color: var(--texto-escuro);
+}
+
+.admin-lado-wrapper label {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    cursor: pointer;
+    font-weight: normal;
+    color: var(--texto-escuro);
+}
+
+/* 7. EDITOR DE CONTEÚDO */
+
+.admin-toolbar{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    padding: 0.5rem 0.6rem;
+    background: var(--verde-card);
+    border: 1.5px solid var(--polpa-clara);
+    border-bottom: none;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+.toolbar-btn {
+    background: none;
+    border: 1px solid transparent;
+    padding: 0.3rem 0.55rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.88rem;
+    color: var(--casca-media);
+    font-family: inherit;
+    transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.toolbar-btn:hover,
+.toolbar-btn:focus-visible {
+    background: var(--polpa-clara);
+    border-color: var(--casca-media);
+}
+
+.toolbar-sep {
+    width: 1px;
+    background: var(--polpa-clara);
+    margin: 0 0.15rem;
+    align-self: stretch;
+}
+
+.admin-editor-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    min-height: 320px;
+}
+
+.admin-editor-area {
+    padding: 0.8rem 1rem;
+    border: 1.5px solid var(--polpa-clara);
+    border-radius: 0 0 0 var(--radius-sm);
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: var(--texto-escuro);
+    background: var(--creme);
+    overflow-y: auto;
+    min-height: 320px;
+    outline: none;
+    line-height: 1.7;
+    resize: vertical;
+}
+
+.admin-editor-area:empty::before {
+    content: attr(data-placeholder);
+    color: var(--texto-medio);
+    pointer-events: none;
+}
+
+.admin-editor-area:focus {
+    border-color: var(--casca-media);
+    box-shadow: 0 0 0 3px rgba(45,90,27,0.15);
+}
+
+.admin-preview-area {
+    padding: 0.8rem 1rem;
+    border: 1.5px solid var(--polpa-clara);
+    border-left: none;
+    border-radius: 0 0 var(--radius-sm) 0;
+    font-size: 0.95rem;
+    background: #fcf9f2;
+    color: var(--texto-escuro);
+    overflow-y: auto;
+    min-height: 320px;
+    line-height: 1.7;
+}
+
+html[data-tema="escuro"] .admin-preview-area {background: var(--verde-card);}
+
+/* - 8. BOTOES DE AÇÃO */
+
+.admin-form-acoes {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.admin-btn-publicar,
+.admin-btn-rascunho,
+.admin-btn-salvar,
+.admin-btn-secundario {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.3rem;
+    border: none;
+    border-radius: var(--radius-pill);
+    font-size: 0.95rem;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background var(--transition-fast), transform var(--transition-fast), opacity var(--transition-fast);
+}
+
+.admin-btn-publicar{
+    background: var(--polpa-verde);
+    color: #fff;
+}
+
+.admin-btn-publicar:hover { background: var(--casca-media); transform: scale(1.04);}
+.admin-btn-publicar:active { transform: scale(0.96);}
+.admin-btn-publicar:disabled { opacity: 0.5; cursor: not-allowed; transform: none;}
+
+.admin-btn-rascunho{
+    background: var(--casca-media);
+    color: var(--creme);
+}
+
+.admin-btn-rascunho:hover { background: var(--casca-escura); transform: scale(1.04);}
+.admin-btn-rascunho:active { transform: scale(0.96);}
+
+.admin-btn-salvar{
+    background: var(--caroco-marrom);
+    color: #fff;
+}
+
+.admin-btn-salvar:hover { background: var(--caroco-claro); transform: scale(1.04);}
+.admin-btn-salvar:active { transform: scale(0.96);}
+
+.admin-btn-secundario{
+    background: var(--verde-card);
+    color: var(--casca-media);
+    border: 1px solid var(--polpa-clara);
+}
+
+.admin-btn-secundario:hover { background: var(--polpa-clara); transform: scale(1.03);}
+
+/* - 9. FEEDBACK (status messages) */
+
+.admin-feedback {
+    min-height: 1.4rem;
+    font-size: 0.88rem;
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.admin-feedback.ok {color: #2d7a1c;}
+.admin-feedback.erro {color: #c0392b; font-weight: bold;}
+.admin-feedback.info {color: var(--texto-medio);}
+
+/* - 10. TABELA DE POSTS */
+
+.admin-tabela {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+
+.admin-tabela th{
+    background: var(--verde-card);
+    color: var(--casca-media);
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+    font-size: 0.82rem;
+    white-space: nowrap;
+    border-bottom: 2px solid var(--polpa-clara);
+}
+
+.admin-tabela td {
+    padding: 0.55rem 0.8rem;
+    border-bottom: 1px solid var(--polpa-clara);
+    vertical-align: middle;
+    color: var(--texto-escuro);
+}
+
+.admin-tabela tr:last-child td {
+    border-bottom: none;
+}
+.admin-tabela tr:hover td {
+    background: var(--verde-card);
+}
+
+.col-reacoes{ width: 80px; text-align: center;}
+.col-acoes {width: 130px; }
+
+.admin-badge-status {
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    border-radius: 99px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.admin-badge-status.publicado { background: #eaf7e9; color: #2d7a1c; }
+.admin-badge-status.rascunho { background: #fff8e0; color: #8a6500; }
+
+.admin-acoes-row {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: nowrap;
+}
+
+.admin-btn-editar,
+.admin-btn-excluir,
+.admin-btn-toggle-status{
+    padding: 0.3rem 0.6rem;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background var(--transition-fast), transform var(--transition-fast);
+    white-space: nowrap;
+}
+
+.admin-btn-editar { background: var(--casca-media); color: #fff;}
+.admin-btn-editar:hover { background: var(--casca-escura); transform: scale(1.05);}
+
+.admin-btn-excluir { background: #c0392b; color: #fff;}
+.admin-btn-excluir:hover { background: #922b21; transform: scale(1.05);}
+
+.admin-btn-toggle-status {
+    background: var(--verde-card);
+    color: var(--casca-media);
+    border: 1px solid var(--polpa-clara);
+}
+.admin-btn-toggle-status:hover { background: var(--polpa-clara); transform: scale(1.05);}
+
+/* - 11. RESPONSIVO */
+
+@media (max-width: 768px) {
+    .admin-editor-split { grid-template-columns: 1fr; }
+
+    .admin-editor-area { border-radius: 0; border-bottom: none;}
+    .admin-preview-area {border-left: 1.5px solid var(--polpa-clara); border-radius: 0 0 var(--radius-sm) var(--radius-sm);}
+
+    .admin-tabela th.col-reacoes,
+    .admin-tabela td:nth-child(5) {display: none;}
+
+    .admin-acoes-row { flex-direction: column; }
+}
+
+@media (max-width: 500px){
+    .admin-layout {padding: 0 0.5rem;}
+
+    .admin-tabela th:nth-child(2),
+    .admin-tabela td:nth-child(2),
+    .admin-tabela th:nth-child(4),
+    .admin-tabela td:nth-child(4) {display: none;}
+}
+
+@media print {
+    .admin-layout {display: none;}
+}
