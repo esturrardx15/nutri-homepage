@@ -409,7 +409,7 @@ function configurarFormulario() {
         console.log('Elemento postConteudo: ', elPostConteudo ? 'encontrado' : 'NÃO ENCONTRADO');
         console.log('innerHTML existe?', elPostConteudo && elPostConteudo.innerHTML !== undefined);
 
-        if (elPostConteudo){
+        if (!elPostConteudo){
             console.error('ERRO: Encontrado no bloco de erro - elPostConteudo é falsy');
             mostrarFeedback('feedbackPost', 'erro', '❌ Erro: editor de conteúdo não encontrado. Recarregue a página.');
             if (btnPublicar) { btnPublicar.disabled = false; btnPublicar.innerHTML = '<i class="fas fa-paper-plane"></i> Publicar'; }
