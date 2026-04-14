@@ -135,7 +135,7 @@ function enviarParaApi(payload, callback) {
         })
         .catch(function (err) {
             // Tratamento específico para erros CORS
-            if (err.messagte && err.message.includes('Failed to fetch')) {
+            if (err.message && err.message.includes('Failed to fetch')) {
                 callback(new Error('Erro de conexão (CORS). Verifique se o Apps Script está deployado como "Web App" com acesso "Anyone" e se a URL está correta.'), null);
             } else {
                 callback(err, null);
@@ -149,10 +149,7 @@ function carregarPostsAdmin(callback) {
 
     var url = cfg.url + '?action=todos&token=' + encodeURIComponent(cfg.token);
     fetchComTimeout(url)
-        .then(function (r) {
-            if (!r.ok) throw new Error('HTTP ' + r.status + ': ' + r.statusText);
-            return r.json();
-        })
+        .then(function (r) { return r.json(); })
         .then(function (data) { 
             var lista = Array.isArray(data) ? data : (data.posts || []);
             callback(null, lista);

@@ -79,10 +79,7 @@ function debounce(fn, ms) {
     };
 }
 
-function _urlConfigurada() {
-    return CONFIG_BLOG.APPS_SCRIPT_URL &&
-        CONFIG_BLOG.APPS_SCRIPT_URL.indexOf('SEU_DEPLOYMENT_ID_AQUI') === 1;
-}
+
 
 function carregarPosts(callback) {
     // Se a URL não está configurada, retorna imediatamente sem fetch
