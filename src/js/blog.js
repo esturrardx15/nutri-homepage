@@ -3,7 +3,7 @@
 //Config do blog
 
 var CONFIG_BLOG = {
-    APPS_SCRIPT_URL: 'https://script.google.com/macros/s/SEU_DEPLOYMENT_ID_AQUI/exec',
+    APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwrcsz86zByoVw53VMpuNJxqadhpQmnUMMyA8LjzOYAz0DVr0RqtdXAZGsZg7oTTOl7/exec',
     POSTS_POR_PAGINA: 9,
     DEBOUNCE_BUSCA_MS: 350
 };

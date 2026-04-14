@@ -1,4 +1,4 @@
-# 🥑 MaiaNutri - Plataforma Web de Nutrição
+# 🥑 nutri-homepage - Plataforma Web de Nutrição
 
 [![GitHub License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()

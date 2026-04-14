@@ -112,7 +112,7 @@ function _resetarFalhas() {
 function _verificarRateVoto(postId) {
     var chave = _CHAVE_VOTOS + String(postId) + '_' + new Date().toISOString().slice(0, 10);
     var props = _getProps();
-    var total = parseInt(props.getProperty(chave) || '0', 10;
+    var total = parseInt(props.getProperty(chave) || '0', 10);
     if (total >= _MAX_VOTOS_DIA) return false;
     props.setProperty(chave, String(total + 1));
     return true;
@@ -232,8 +232,8 @@ function processarVoto(corpo) {
         if (String(dados[i][0]) === id) {
             var colLike = 7; // coluna G (index 6) = likes
             var colDislike = 8; // coluna H (index 7) = dislikes
-            var likes = parseInt(dados[i][6] || '0';
-            var dislikes = parseInt(dados[i][7] || '0';
+            var likes = parseInt(dados[i][6]) || '0';
+            var dislikes = parseInt(dados[i][7]) || '0';
 
             if (tipo === 'like') {
                 likes++;

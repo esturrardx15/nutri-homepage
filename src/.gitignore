@@ -49,3 +49,6 @@ package-lock.json
 
 ### Vercel ###
 .vercel/
+
+### arquivo oculto ###
+oculto.md
