@@ -149,7 +149,10 @@ function carregarPostsAdmin(callback) {
 
     var url = cfg.url + '?action=todos&token=' + encodeURIComponent(cfg.token);
     fetchComTimeout(url)
-        .then(function (r) { return r.json(); })
+        .then(function (r) {
+            if (!r.ok) throw new Error('HTTP ' + r.status + ': ' + r.statusText);
+            return r.json();
+        })
         .then(function (data) { 
             var lista = Array.isArray(data) ? data : (data.posts || []);
             callback(null, lista);
