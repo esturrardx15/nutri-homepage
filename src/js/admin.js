@@ -287,7 +287,7 @@ function excluirPost(post) {
 function recarregarLista() {
     carregarPostsAdmin(function (err, lista){
         if (err) { mostrarFeedback('feedbackLista', 'erro', '❌ Erro ao carregar posts.'); return; }
-        _adminState,posts = lista;
+        _adminState.posts = lista;
         aplicarFiltroAdmin();
         popularSelectTemas(lista);
     });
@@ -347,7 +347,7 @@ function limparFormulario() {
     if (elStatus) elStatus.value = 'publicado';
 
     var editor = document.getElementById('postConteudo');
-    if (editor) elConteudo.innerHTML = '';
+    if (editor) editor.innerHTML = '';
 
     var preview = document.getElementById('previewConteudo');
     if (preview) preview.innerHTML = '';
