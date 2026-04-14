@@ -633,7 +633,7 @@ function configurarUiConfig() {
     console.log('Executando configurarUiConfig...');
 
     var btnSalvar = document.getElementById('btnSalvarConfig');
-    var btnTestar = document.getElementById('btnTestarConexap');
+    var btnTestar = document.getElementById('btnTestarConexao');
     var inputUrl = document.getElementById('adminApiUrl');
     var inputTok = document.getElementById('adminToken');
     var btnVerTok = document.getElementById('btnVerToken');
