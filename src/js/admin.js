@@ -394,18 +394,36 @@ function configurarFormulario() {
     form.addEventListener('submit', function (e) {
         e.preventDefault();
 
+        console.log('Formulário submetido');
+
         // Desabilita botões durante envio
         if (btnPublicar) { btnPublicar.disabled = true; btnPublicar.innerHTML = '<i class=fas fa-spinner fa-spin"></i> Salvando...'; }
 
-        // Captura valores do formulário - sempre busca o elemento atual
+        // Captura valores do formulário com validação
         var elPostConteudo = document.getElementById('postConteudo');
+
+        console.log('Elemento postConteudo: ', elPostConteudo ? 'encontrado' : 'NÃO ENCONTRADO');
+
+        if (elPostConteudo){
+            console.error('ERRO CRÍTICO: Elemento postConteudo não encontrado!');
+            mostrarFeedback('feedbackPost', 'erro', '❌ Erro: editor de conteúdo não encontrado. Recarregue a página.');
+            if (btnPublicar) { btnPublicar.disabled = false; btnPublicar.innerHTML = '<i class="fas fa-paper-plane"></i> Publicar'; }
+            return;
+        }
+
         var titulo = (document.getElementById('postTitulo') || {}).value || '';
         var temaSelect = (document.getElementById('postTema') || {}).value || '';
         var novoTema = (document.getElementById('novoTema') || {}).value.trim() || '';
         var tema = novoTema || temaSelect;
         var status = (document.getElementById('postStatus') || {}).value || 'publicado';
-        var conteudo = sanitizarConteudoAdmin((elPostConteudo || {}).innerHTML || '');
+        var conteudo = sanitizarConteudoAdmin(elPostConteudo.innerHTML || '');
         var id = (document.getElementById('postId') || {}).value || '';
+
+        console.log('Valores capturados:');
+        console.log('- Título:', titulo);
+        console.log('- Tema:', tema);
+        console.log('- Conteúdo length:', conteudo.length);
+        console.log('- Status:', status);
 
         // Validação
         var valido = true;
