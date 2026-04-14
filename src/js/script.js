@@ -412,7 +412,7 @@ function iniciarCarrossel() {
     track.innerHTML = '';
     lista.forEach(function (item) {
         var img = document.createElement('img');
-        img.src = '../../img/' + item.arquivo;
+        img.src = '/img/' + item.arquivo;
         img.alt = item.descricao || '';
         img.loading = 'lazy';
         img.setAttribute('width', '800');
