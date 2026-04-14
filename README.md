@@ -193,7 +193,7 @@ Otimizações implementadas:
 ## 📞 Contato & Suporte
 
 - **Email**: est.teodoro@gmail.com
-- **Website**: [maianutrі.com.br](https://maianutrі.com.br)
+- **Website**: [maianutri.vercel.app](https://maianutri.vercel.app)
 - **Instagram**: [@obladepontokom](https://www.instagram.com/obladepontokom/)
 
 ---
