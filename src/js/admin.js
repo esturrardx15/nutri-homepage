@@ -658,8 +658,13 @@ function configurarUiConfig() {
     // Testar conexão com o Apps Script
     if (btnTestar) {
         btnTestar.addEventListener('click', function () {
+            console.log('Botão testar conexão clicado');
+
             var url = (inputUrl || {}).value || '';
             var token = (inputTok || {}).value || '';
+
+            console.log('URL: ' + url);
+            console.log('Token length: ' + token.length);
 
             if (!url || !token) {
                 mostrarFeedback('feedbackConfig', 'erro', '❌ Preencha a URL e o token para testar a conexão.');
@@ -672,14 +677,17 @@ function configurarUiConfig() {
             btnTestar.disabled = true;
             btnTestar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Testando...';
 
+            console.log('Iniciando teste de conexão com o Apps Script...');
+
             // Tenta buscar posts para validar conexao e token
             carregarPostsAdmin(function (err, lista) {
                 btnTestar.disabled = false;
                 btnTestar.innerHTML = '<i class="fas fa-plug"></i> Testar Conexão';
 
                 if (err) {
+                    console.error('Erro ao testar conexão:', err);
                     var msgErro = err.message || ' Erro desconhecido';
-                    if (msgErro.includes('CORS')) {
+                    if (msgErro.includes('CORS') || msgErro.includes('Failed to fetch')) {
                         mostrarFeedback('feedbackConfig', 'erro', '❌ Erro de CORS! O Apps Script não está configurado corretamente.');
                     } else if (msgErro.includes('Token inválido')) {
                         mostrarFeedback('feedbackConfig', 'erro', '❌ Token inválido! Verifique o token configurado no Apps Script e no painel.');
@@ -689,9 +697,12 @@ function configurarUiConfig() {
                     return;
                 }
 
+                console.log('Conexão Ok! Posts encontrados: ' + lista.length);
                 mostrarFeedback('feedbackConfig', 'ok', '✅ Conexão bem-sucedida! ' + lista.length + ' post(s) encontrado(s). Apps Script configurado corretamente.');
             });
         });
+    }else {
+        console.log('Botão testar conexão não encontrado');
     }
 
     // Mostrar/ocultar token
@@ -699,7 +710,10 @@ function configurarUiConfig() {
         btnVerTok.addEventListener('click', function () {
             var mostrar = inputTok.type === 'password';
             inputTok.type = mostrar ? 'text' : 'password';
-            this.querySelector('i').className = mostrar ? 'fas fa-eye-slash' : 'fas fa-eye';
+            var icone =  this.querySelector('i');
+            if (icone) {
+                icone.className = mostrar ? 'fas fa-eye-slash' : 'fas fa-eye';
+                }
             this.setAttribute('aria-label', mostrar ? 'Ocultar token' : 'Mostrar token');        
         });
     }
@@ -714,8 +728,18 @@ function configurarFiltroLista() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    console.log('DOM carregado para página admin');
+
     // Só inicializa se for a páginna admin
-    if (!document.getElementById('formPost')) return;
+    document.getElementById('formPost')
+    var formPost = document.getElementById('formPost');
+    if (!formPost) {
+        console.log('Não é a página admin, saindo...');
+        return;
+    }
+
+    console.log('Inicializando página admin...');
+
 
     configurarUiConfig();
     configurarToggleSecoes();
@@ -728,8 +752,14 @@ document.addEventListener('DOMContentLoaded', function () {
     configurarFiltroLista();
 
     var btnNovo = document.getElementById('btnNovoPost');
-    if (btnNovo) btnNovo.addEventListener('click', limparFormulario);
+    if (btnNovo) { 
+        btnNovo.addEventListener('click', limparFormulario);
+    } else {
+        console.warn('Botão Novo Post não encontrado');
+    }
 
-    // Carrega posts da API (se configurada)
+    //Carrega posts da API (se configurada)
     recarregarLista();
+
+    console.log('Inicialização completa!');
 });
