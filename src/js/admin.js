@@ -394,7 +394,7 @@ function configurarFormulario() {
     form.addEventListener('submit', function (e) {
         e.preventDefault();
 
-        console.log('Formulário submetido');
+        console.log('=== INÍCIO DO SUBMIT ===');
 
         // Desabilita botões durante envio
         if (btnPublicar) { btnPublicar.disabled = true; btnPublicar.innerHTML = '<i class=fas fa-spinner fa-spin"></i> Salvando...'; }
@@ -402,21 +402,32 @@ function configurarFormulario() {
         // Captura valores do formulário com validação
         var elPostConteudo = document.getElementById('postConteudo');
 
+        console.log('Tipo de elPostConteudo:', typeof elPostConteudo);
+        console.log('elPostConteudo é null?', elPostConteudo === null);
+        console.log('elPostConteudo é undefined?', elPostConteudo === undefined);
+        console.log('Valor booleano de elPostConteudo:', !!elPostConteudo);
         console.log('Elemento postConteudo: ', elPostConteudo ? 'encontrado' : 'NÃO ENCONTRADO');
+        console.log('innerHTML existe?', elPostConteudo && elPostConteudo.innerHTML !== undefined);
 
         if (elPostConteudo){
-            console.error('ERRO CRÍTICO: Elemento postConteudo não encontrado!');
+            console.error('ERRO: Encontrado no bloco de erro - elPostConteudo é falsy');
             mostrarFeedback('feedbackPost', 'erro', '❌ Erro: editor de conteúdo não encontrado. Recarregue a página.');
             if (btnPublicar) { btnPublicar.disabled = false; btnPublicar.innerHTML = '<i class="fas fa-paper-plane"></i> Publicar'; }
             return;
         }
+
+        console.log('Passou da validação do elPostConteudo');
 
         var titulo = (document.getElementById('postTitulo') || {}).value || '';
         var temaSelect = (document.getElementById('postTema') || {}).value || '';
         var novoTema = (document.getElementById('novoTema') || {}).value.trim() || '';
         var tema = novoTema || temaSelect;
         var status = (document.getElementById('postStatus') || {}).value || 'publicado';
+
+        console.log('Tentando sanitizar conteúdo...');
         var conteudo = sanitizarConteudoAdmin(elPostConteudo.innerHTML || '');
+        console.log('Conteúdo sanitizado com sucesso');
+
         var id = (document.getElementById('postId') || {}).value || '';
 
         console.log('Valores capturados:');
