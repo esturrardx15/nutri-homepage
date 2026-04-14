@@ -1,0 +1,10 @@
+# robots.txt - permite que buscadores indexem o site
+
+User-agent: *
+Allow: /
+
+# Bloqueia área administrativa
+Disallow: /admin
+
+# Localização do sitemap
+Sitemap: https://maianutri.vercel.app/sitemap.xml
