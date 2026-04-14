@@ -630,11 +630,20 @@ function configurarToggleSecoes() {
 }
 
 function configurarUiConfig() {
+    console.log('Executando configurarUiConfig...');
+
     var btnSalvar = document.getElementById('btnSalvarConfig');
     var btnTestar = document.getElementById('btnTestarConexap');
     var inputUrl = document.getElementById('adminApiUrl');
     var inputTok = document.getElementById('adminToken');
     var btnVerTok = document.getElementById('btnVerToken');
+
+    console.log('Elementos encontrados:');
+    console.log('-btnSalvar: ', btnSalvar ? 'OK' : 'NÃO ENCONTRADO');
+    console.log('-btnTestar: ', btnTestar ? 'OK' : 'NÃO ENCONTRADO');
+    console.log('-inputUrl: ', inputUrl ? 'OK' : 'NÃO ENCONTRADO');
+    console.log('-inputTok: ', inputTok ? 'OK' : 'NÃO ENCONTRADO');
+    console.log('-btnVerTok: ', btnVerTok ? 'OK' : 'NÃO ENCONTRADO');
 
     // Preenche valores salvos
     var cfg = lerCfgApi();
@@ -729,6 +738,11 @@ function configurarFiltroLista() {
 
 document.addEventListener('DOMContentLoaded', function () {
     console.log('DOM carregado para página admin');
+
+    // Debug: mostra todos os botoes na página
+    var todosBotoes = document.querySelectorAll('button');
+    console.log('Total de botões encontrados:', todosBotoes.length);
+    console.log('IDs dos botões:', Array.from(todosBotoes).map(function (b) { return b.id || '(sem id)'; }));
 
     // Só inicializa se for a páginna admin
     document.getElementById('formPost')
