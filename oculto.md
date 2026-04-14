@@ -1,19 +1,587 @@
-# MaiaNutri
+# 🔐 MaiaNutri - Documentação Técnica Interna
 
-Site profissional e responsivo focado em nutrição e bem-estar, desenvolvido com tecnologias web modernas. Este projeto integra um front-end em HTML, CSS e JavaScript com um backend robusto usando Google Apps Script, permitindo gestão dinâmica de conteúdo e funcionalidades avançadas.
+**⚠️ ARQUIVO CONFIDENCIAL - NÃO FAZER PUSH PARA GIT**
+
+Este documento contém instruções detalhadas para customização e manutenção do projeto MaiaNutri, incluindo localização de arquivos, como alterar imagens, cores, textos e configurações sensíveis.
+
+---
 
 ## Descrição Geral
 
-O MaiaNutri é uma plataforma web dedicada a disponibilizar informações sobre nutrição, apresentar serviços nutricionais e manter um blog educativo. O projeto foi otimizado para desempenho, segurança e usabilidade, com deploy automático na Vercel e integração com Google Apps Script para funcionalidades de backend.
+O MaiaNutri é uma plataforma web para nutricionista especializada, com arquitetura moderna separada em Frontend (HTML/CSS/JS) e Backend (Google Apps Script). Este documento guia o desenvolvedor através de todas as customizações necessárias.
 
-**Tecnologias principais:**
-- HTML5 para estrutura semântica
-- CSS3 para estilização responsiva
-- JavaScript (Vanilla) para interatividade
-- Google Apps Script para processamento de dados e integração com serviços Google
-- Vercel para hospedagem estática
+**Stack Tecnológico:**
+- **Frontend**: HTML5, CSS3, JavaScript Vanilla
+- **Backend**: Google Apps Script (serverless)
+- **Dados**: Google Sheets
+- **Hospedagem**: Vercel
+- **Versionamento**: Git + GitHub
 
-## Estrutura do projeto
+---
+
+# 🛠️ GUIA DE CUSTOMIZAÇÃO PRÁTICO
+
+## 1️⃣ MUDAR CORES DO TEMA
+
+### Localização: `src/css/styles.css`
+
+**Passo 1**: Abra o arquivo `styles.css`
+
+**Passo 2**: Procure pela seção de variáveis CSS (início do arquivo):
+
+```css
+:root {
+  --color-dark-green: #2D5C32;      /* Verde escuro - títulos, footer */
+  --color-medium-green: #4F7D48;    /* Verde médio - botões, links */
+  --color-light-green: #A8C498;     /* Verde claro - backgrounds */
+  --color-beige: #F5F0E6;           /* Bege - fundo principal */
+  --color-white: #FFFFFF;           /* Branco - textos em escuro */
+}
+```
+
+**Passo 3**: Use uma ferramenta de cores
+- [Color Picker](https://htmlcolorcodes.com) - Gera códigos hex
+- [Colordot](https://color.hailpixel.com) - Visualiza paletas
+
+**Passo 4**: Substitua os valores hex conforme desejar
+
+**Exemplo - Alterar para tons mais quentes:**
+```css
+:root {
+  --color-dark-green: #8B4513;      /* Terra escura */
+  --color-medium-green: #CD853F;    /* Peru */
+  --color-light-green: #DEB887;     /* Burlywood */
+  --color-beige: #FFF8DC;           /* Cornsilk */
+  --color-white: #FFFFFF;
+}
+```
+
+**Passo 5**: Salve (`Ctrl + S`) - as mudanças refletem em tempo real se usar Live Server
+
+### Cores por componente:
+
+| Componente | Arquivo | Observação |
+|-----------|---------|-----------|
+| Navegação | `styles.css` + `homepage.css` | Fundo: `--color-dark-green` |
+| Botões | `styles.css` | Background: `--color-medium-green` |
+| Cards de Serviço | `servicos.css` | Bordas: `--color-light-green` |
+| Hero Image | `homepage.css` | Overlay: ajustar opacity |
+| Footer | `styles.css` | Background: `--color-dark-green` |
+
+---
+
+## 2️⃣ ALTERAR IMAGENS
+
+### Estrutura de Pastas: `img/`
+
+```
+img/
+├── baner.jpg          # Hero image da homepage
+├── servicos/
+│   ├── consultoria.jpg
+│   ├── acompanhamento.jpg
+│   └── ...
+├── blog/
+│   └── posts/
+│       ├── post-1.jpg
+│       └── post-2.jpg
+└── icones/
+    ├── facebook.svg
+    └── instagram.svg
+```
+
+### Substituir Imagem Principal (Hero Banner)
+
+**Arquivo**: `src/html/homepage.html`
+
+1. Procure por:
+```html
+<section class="hero" style="background-image: url('../../img/baner.jpg')">
+```
+
+2. Substitua `../../img/baner.jpg` pela sua nova imagem:
+   - Salve a imagem em `img/` com nome descritivo
+   - Atualize o caminho no HTML
+   
+3. **Tamanho recomendado**: 1920x600px (otimizado para web)
+
+### Alterar Logo/Ícone
+
+**Arquivo**: `src/html/homepage.html` (e outras páginas)
+
+Procure por:
+```html
+<link rel="icon" href="data:image/svg+xml, <svg xmlns='...'><text>🥑</text></svg>">
+```
+
+Opções:
+- **Trocar emoji**: Substitua `🥑` por outro (ex: `🍎`, `🥗`, `💪`)
+- **Usar arquivo**: `href="../../img/favicon.png"` (criar arquivo 32x32px)
+
+### Imagens nos Serviços
+
+**Arquivo**: `src/html/servicos.html`
+
+```html
+<div class="service-card">
+  <img src="../../img/servicos/consultoria.jpg" alt="Consultoria">
+  <h3>Nome do Serviço</h3>
+  <!-- ... -->
+</div>
+```
+
+**Como trocar:**
+1. Adicione sua imagem a `img/servicos/`
+2. Atualize o atributo `src` com o caminho correto
+3. Modifique o `alt` com descrição adequada (importante para SEO/acessibilidade)
+
+### Otimizar Imagens
+
+**Ferramentas recomendadas:**
+- [TinyPNG](https://tinypng.com) - Compressão sem perda (máx 100KB)
+- [ImageResizer](https://imageresizer.com) - Redimensionar para web
+- [SVGO](https://jakearchibald.github.io/svgomg/) - Otimizar SVGs
+
+**Tamanhos recomendados:**
+- Hero banner: 1920x600px
+- Card de serviço: 400x300px
+- Logo: 200x200px
+- Ícones: 64x64px
+
+---
+
+## 3️⃣ ALTERAR TEXTOS E CONTEÚDO
+
+### Textos da Homepage
+
+**Arquivo**: `src/html/homepage.html`
+
+```html
+<!-- HERO SECTION -->
+<h1>Mariah (Maia) Katharine - Nutricionista</h1>
+<p class="hero-subtitle">Acompanhamento nutricional personalizado</p>
+```
+
+Encontre e substitua os textos diretamente no HTML.
+
+### Alterar Informações Profissionais
+
+Procure no arquivo e atualize:
+
+```html
+<!-- Meta tags (importante para SEO) -->
+<meta name="description" content="Nutricionista Mariah Katharine (CRN 35446) - Acompanhamento...">
+
+<!-- Schema JSON-LD -->
+{
+  "name": "Nutricionista Mariah Katharine",
+  "priceRange": "$$"
+}
+```
+
+### Textos dos Serviços
+
+**Arquivo**: `src/html/servicos.html`
+
+```html
+<div class="service-card">
+  <h3>Nome do Serviço</h3>
+  <p>Descrição breve do serviço</p>
+  <p class="price">R$ XXX</p>
+  <button>Agendar</button>
+</div>
+```
+
+### Textos do Footer
+
+**Arquivo**: `src/html/homepage.html` (e outras)
+
+```html
+<footer>
+  <p>&copy; 2026 Mariah Katharine - Nutricionista. Todos os direitos reservados.</p>
+  <p>CRN: 35446</p>
+  <p>Email: contato@maianutrі.com.br</p>
+</footer>
+```
+
+**Onde encontrar footer:**
+- Procure por `<footer>` ou `class="footer"`
+- Atualize nome, CRN, email, telefone, redes sociais
+
+---
+
+## 4️⃣ ALTERAR REDES SOCIAIS E CONTATOS
+
+### Arquivo: `src/html/homepage.html`
+
+Procure por:
+
+```html
+<a href="https://instagram.com/maianutrі" target="_blank">
+  <i class="fab fa-instagram"></i>
+</a>
+```
+
+**Substituições necessárias:**
+
+| Rede | Campo | Exemplo |
+|------|-------|---------|
+| Instagram | `href` | `https://instagram.com/seu-usuario` |
+| WhatsApp | `href` | `https://wa.me/5511999999999` |
+| Facebook | `href` | `https://facebook.com/seu-pagina` |
+| Email | `href` | `mailto:seu-email@domain.com` |
+| Telefone | `href` | `tel:+5511999999999` |
+
+**Formato WhatsApp completo:**
+```html
+<a href="https://wa.me/55XXXXXXXXXXX?text=Olá%20gostaria%20de%20agendar">
+  <i class="fab fa-whatsapp"></i> Agendar
+</a>
+```
+
+---
+
+## 5️⃣ CUSTOMIZAR FORMULÁRIOS
+
+### Arquivo: `src/html/homepage.html` ou `src/html/admin.html`
+
+```html
+<form id="contact-form">
+  <input type="text" name="nome" placeholder="Seu Nome" required>
+  <input type="email" name="email" placeholder="seu@email.com" required>
+  <textarea name="mensagem" placeholder="Sua mensagem..."></textarea>
+  <button type="submit">Enviar</button>
+</form>
+```
+
+### Adicionar Novos Campos
+
+1. **Adicione no HTML:**
+```html
+<input type="tel" name="telefone" placeholder="(11) 99999-9999" required>
+<select name="servico" required>
+  <option>Selecione um serviço</option>
+  <option>Consultoria</option>
+  <option>Acompanhamento</option>
+</select>
+```
+
+2. **Valide no JavaScript** (`src/js/admin.js`):
+```javascript
+function validarFormulario() {
+  const telefone = document.querySelector('[name="telefone"]').value;
+  if (!/^\(\d{2}\) \d{4,5}-\d{4}$/.test(telefone)) {
+    alert('Telefone inválido');
+    return false;
+  }
+  return true;
+}
+```
+
+3. **Processe no Apps Script** (`src/apps-script/Codigo.gs`):
+```javascript
+function enviarFormulario(dados) {
+  // Salvar em planilha Google
+  const aba = SpreadsheetApp.openById(SHEET_ID).getSheetByName('Contatos');
+  aba.appendRow([dados.nome, dados.email, dados.telefone, dados.servico]);
+}
+```
+
+---
+
+## 6️⃣ CONFIGURAR BLOG DINAMICAMENTE
+
+### Arquivo: `src/js/blog.js`
+
+**URL do API do Apps Script:**
+
+```javascript
+const API_CONFIG = {
+  BASE_URL: 'https://script.googleapis.com/macros/s/SEU_SCRIPT_ID_AQUI/usercache/latest',
+  ENDPOINTS: {
+    POSTS: '?action=get-posts',
+    POST_DETALHE: (id) => `?action=get-post&id=${id}`,
+    SERVICOS: '?action=get-services',
+  }
+};
+```
+
+**Onde obter SEU_SCRIPT_ID_AQUI:**
+1. Acesse https://script.google.com
+2. Seu projeto MaiaNutri Backend
+3. Clique em "Deploy" → "Web deployments"
+4. Copie o ID da URL (parte após `/s/` até `/usercopy`)
+
+### Estrutura de Dados - Posts no Google Sheets
+
+**Aba "posts"** deve ter colunas:
+
+```
+A: id | B: titulo | C: conteudo | D: tema | E: data | F: status | 
+G: likes | H: dislikes | I: img_fundo | J: img_lateral | K: autor
+```
+
+**Exemplo de dados:**
+```
+1 | "5 Alimentos Essenciais" | "Lorem ipsum..." | "Nutrição" | "2026-04-10" | 
+"publicado" | 12 | 0 | "https://..." | "https://..." | "Maia"
+```
+
+### Filtro de Posts
+
+**Arquivo**: `src/html/blog.html`
+
+```html
+<select id="filter-categoria">
+  <option value="">Todas</option>
+  <option value="Nutrição">Nutrição</option>
+  <option value="Receitas">Receitas</option>
+  <option value="Bem-estar">Bem-estar</option>
+</select>
+```
+
+**JavaScript** (`src/js/blog.js`):
+```javascript
+document.getElementById('filter-categoria').addEventListener('change', (e) => {
+  const categoria = e.target.value;
+  carregarPosts(categoria);
+});
+```
+
+---
+
+## 7️⃣ ALTERAR ESTILOS CSS
+
+### Estrutura de CSS
+
+```
+src/css/
+├── styles.css      # Estilos globais (variáveis, reset)
+├── homepage.css    # Específicos da homepage
+├── blog.css        # Blog
+├── servicos.css    # Serviços
+└── admin.css       # Admin
+```
+
+### Exemplo - Aumentar Tamanho de Fonte
+
+**Arquivo**: `src/css/styles.css` ou específico
+
+```css
+/* Antes */
+h1 {
+  font-size: 2rem;
+}
+
+/* Depois */
+h1 {
+  font-size: 3rem;
+}
+```
+
+### Exemplo - Alterar Espaçamento
+
+```css
+/* Padding */
+.container {
+  padding: 20px 40px; /* Antes */
+  padding: 40px 80px; /* Depois - maior espaço */
+}
+
+/* Margin */
+.card {
+  margin: 10px;  /* Antes */
+  margin: 20px;  /* Depois */
+}
+```
+
+### Exemplo - Mudar Borda/Sombra
+
+```css
+.card {
+  border: 1px solid var(--color-light-green);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  
+  /* Nova versão com sombra maior */
+  border: 2px solid var(--color-medium-green);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+```
+
+---
+
+## 8️⃣ CONFIGURAR GOOGLE APPS SCRIPT
+
+### Arquivo: `src/apps-script/Codigo.gs`
+
+**Passo 1**: Copie o código para https://script.google.com
+
+**Passo 2**: Configure o ID da planilha
+
+```javascript
+// Na linha 15 aprox:
+var SHEET_ID = "1em2t4iSeDKBok8Ux6-86_KZdpishuVumjAgajBePgB4";
+```
+
+**Como obter SHEET_ID:**
+1. Abra sua planilha em Google Sheets
+2. Copie da URL: `docs.google.com/spreadsheets/d/ESTE_ID_AQUI/edit`
+3. Cole em `SHEET_ID`
+
+**Passo 3**: Alterar Nome das Abas
+
+```javascript
+var ABA_POSTS = 'posts';      // Mude se sua aba tem outro nome
+var ABA_CONFIG = 'config';    // Mude se sua aba tem outro nome
+```
+
+**Passo 4**: Deploy
+
+1. Clique em "Deploy" → "New deployment"
+2. Type: "Web app"
+3. Execute as: sua conta
+4. Grant access: "Anyone"
+5. Copy URL e salve em segurança
+
+---
+
+## 9️⃣ ADICIONAR NOVAS PÁGINAS
+
+### Passo 1: Criar arquivo HTML
+
+Crie `src/html/nova-pagina.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Página - MaiaNutri</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/nova-pagina.css">
+</head>
+<body>
+    <!-- Copie a navegação de outro arquivo -->
+    <nav><!-- navigation aqui --></nav>
+    
+    <!-- Seu conteúdo -->
+    <main>
+        <h1>Conteúdo da Nova Página</h1>
+    </main>
+    
+    <!-- Copie o footer -->
+    <footer><!-- footer aqui --></footer>
+    
+    <script src="../js/script.js"></script>
+</body>
+</html>
+```
+
+### Passo 2: Criar CSS
+
+Crie `src/css/nova-pagina.css` com estilos específicos
+
+### Passo 3: Registrar em Vercel
+
+**Arquivo**: `vercel.json`
+
+Adicione no array `rewrites`:
+
+```json
+{
+  "source": "/nova-pagina",
+  "destination": "/src/html/nova-pagina.html"
+}
+```
+
+### Passo 4: Adicionar Link na Navegação
+
+**Arquivo**: `src/html/homepage.html`
+
+```html
+<nav class="navbar">
+  <a href="/">Home</a>
+  <a href="/servicos">Serviços</a>
+  <a href="/nova-pagina">Nova Página</a> <!-- ADICIONE -->
+</nav>
+```
+
+---
+
+## 🔟 CONFIGURAÇÕES SENSÍVEIS (Variáveis de Ambiente)
+
+### Credenciais (Nunca expor no código)
+
+Crie arquivo `.env.local` (fora do Git):
+
+```
+VITE_APPS_SCRIPT_URL=https://script.googleapis.com/macros/s/ABC123.../usercopy
+VITE_ANALYTICS_ID=GA-XXXXX
+VITE_CONTACT_EMAIL=admin@maianutrі.com.br
+```
+
+### Usar em JavaScript
+
+```javascript
+const apiUrl = process.env.VITE_APPS_SCRIPT_URL;
+```
+
+### No Vercel (Produção)
+
+1. Vá para projeto
+2. Settings → Environment Variables
+3. Adicione as mesmas variáveis
+
+---
+
+## 1️⃣1️⃣ CHECKLIST DE CUSTOMIZAÇÃO
+
+- [ ] Mudar paleta de cores em `styles.css`
+- [ ] Trocar imagem principal (hero banner)
+- [ ] Atualizar nome, CRN, email profissional
+- [ ] Configurar redes sociais (Instagram, WhatsApp)
+- [ ] Ajustar texto da homepage
+- [ ] Adicionar serviços da profissional
+- [ ] Configurar Google Apps Script
+- [ ] Testar formulários
+- [ ] Testar blog dinâmico
+- [ ] Fazer deploy em Vercel
+- [ ] Registrar domínio
+- [ ] Configurar Google Analytics
+- [ ] Testar em mobile
+
+---
+
+## 1️⃣2️⃣ TROUBLESHOOTING COMUM
+
+| Problema | Solução |
+|----------|---------|
+| Cores não mudam | Limpe cache: `Ctrl + F5` |
+| Imagens não carregam | Verifique caminho da imagem (relativo vs absoluto) |
+| Blog não mostra posts | Verifique Sheet ID e nome da aba |
+| Formulário não funciona | Valide Google Apps Script deployment |
+| Links quebrados | Use caminhos relativos: `../../img/` |
+| Responsividade ruim | Teste em diferentes breakpoints (640px, 1024px) |
+
+---
+
+## 1️⃣3️⃣ RECURSOS E LINKS ÚTEIS
+
+**Documentação:**
+- [MDN Web Docs](https://developer.mozilla.org)
+- [Google Apps Script Docs](https://developers.google.com/apps-script)
+- [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/--*)
+
+**Ferramentas:**
+- [Color Picker](https://htmlcolorcodes.com)
+- [Image Compressor](https://tinypng.com)
+- [Responsive Checker](https://www.responsively.app)
+
+---
+
+**Última atualização**: 13 de abril de 2026  
+**Mantido por**: Tim de Desenvolvimento MaiaNutri
 
 ```
 MaiaNutri/

@@ -161,7 +161,7 @@ function renderizarCards(posts, pagina) {
     slice.forEach(function (post, idx) {
         var card = document.createElement('a');
         card.className = 'post-card';
-        card.href = 'blog-post.html?id=' + encodeURIComponent(post.id);
+        card.href = '/blog/post?id=' + encodeURIComponent(post.id);
         card.setAttribute('aria-label', 'Ler post:' + (post.titulo || 'Post'));
         card.style.animationDelay = (idx * 0.06) + 's';
 
@@ -348,7 +348,7 @@ function renderizarRecentes(posts) {
         var li = document.createElement('li');
         var a = document.createElement('a');
         a.className = 'recente-link';
-        a.href = 'blog-post.html?id=' + encodeURIComponent(post.id);
+        a.href = '/blog/post?id=' + encodeURIComponent(post.id);
         a.textContent = post.titulo || 'Post sem título';
         li.appendChild(a);
         lista.appendChild(li);
@@ -725,7 +725,7 @@ function carregarPostsRelacionados(postAtual) {
         relacionados.forEach(function (post) {
             var card = document.createElement('a');
             card.className = 'post-card';
-            card.href = 'blog-post.html?id=' + encodeURIComponent(post.id);
+            card.href = '/blog/post?id=' + encodeURIComponent(post.id);
             card.setAttribute('aria-label', 'Ler post relacionado: ' + (post.titulo || ''));
 
             card.innerHTML =
