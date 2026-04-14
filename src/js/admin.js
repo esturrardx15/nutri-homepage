@@ -378,12 +378,14 @@ function configurarFormulario() {
         // Desabilita botões durante envio
         if (btnPublicar) { btnPublicar.disabled = true; btnPublicar.innerHTML = '<i class=fas fa-spinner fa-spin"></i> Salvando...'; }
 
+        // Captura valores do formulário - sempre busca o elemento atual
+        var elPostConteudo = document.getElementById('postConteudo');
         var titulo = (document.getElementById('postTitulo') || {}).value || '';
         var temaSelect = (document.getElementById('postTema') || {}).value || '';
         var novoTema = (document.getElementById('novoTema') || {}).value.trim() || '';
         var tema = novoTema || temaSelect;
         var status = (document.getElementById('postStatus') || {}).value || 'publicado';
-        var conteudo = sanitizarConteudoAdmin((editorEl || {}).innerHTML || '');
+        var conteudo = sanitizarConteudoAdmin((elPostConteudo || {}).innerHTML || '');
         var id = (document.getElementById('postId') || {}).value || '';
 
         // Validação
