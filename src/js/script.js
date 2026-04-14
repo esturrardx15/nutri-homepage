@@ -379,18 +379,27 @@ function iniciarValidacaoFormulario() {
         var corpo = 'Olá, ' + CONFIG.nome.split(' ')[0] + '!\n\nMeu nome é ' + nome + ' e meu email é ' + email + '.\n\n' + mensagem;
         var mailto = 'mailto:' + CONFIG.email + '?subject=' + encodeURIComponent(assunto) + '&body=' + encodeURIComponent(corpo);
 
-        // Feedback visual
+        // Feedback visual imediato
         btnEnviar.disabled = true;
         btnEnviar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Abrindo e-mail...';
+        
+        // Limpa formulário imediatamente
+        setTimeout(function () {
+            form.reset();
+            if (charCounter) charCounter.textContent = '0 / 2000';
+        }, 100);
+
+        // Abre email (sem bloquear)
         window.open(mailto, '_blank');
 
-        ultimoEnvio = Date.now(); // Registra o horário do envio para rate-limit
+        ultimoEnvio = Date.now(); // Rate-limit
 
+        // Mostra sucesso e reabilita botão rapidamente
         setTimeout(function () {
             document.getElementById('msgSucesso').style.display = 'block';
             btnEnviar.disabled = false;
-            btnEnviar.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar por E-mail';
-        }, 1500);
+            btnEnviar.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar E-mail';
+        }, 700);
     });
 }
 
