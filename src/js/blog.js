@@ -73,20 +73,11 @@ function debounce(fn, ms) {
     return function () {
         var args = arguments; ctx = this;
         clearTimeout(timer);
-        timer = setTimeout(function () {
-            fn.apply(ctx, args);
-        }, ms);
+        timer = setTimeout(function () { fn.apply(ctx, args); }, ms);
     };
 }
 
-
-
 function carregarPosts(callback) {
-    // Se a URL não está configurada, retorna imediatamente sem fetch
-    if (!_urlConfigurada()) {
-        callback(new Error('URL não configurada'), []);
-        return;
-    }
     var url = CONFIG_BLOG.APPS_SCRIPT_URL + '?action=posts_publicados';
     fetchComTimeout(url).then(function (r) {
         if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -100,10 +91,6 @@ function carregarPosts(callback) {
 }
 
 function carregarPostPorId(id, callback) {
-    if (!_urlConfigurada()) {
-        callback(new Error('URL não configurada'), null);
-        return;
-    }
     var url = CONFIG_BLOG.APPS_SCRIPT_URL + '?action=post&id=' + encodeURIComponent(id);
     fetchComTimeout(url).then(function (r) {
         if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -114,7 +101,6 @@ function carregarPostPorId(id, callback) {
 }
 
 function votarPost(postId, tipo) {
-    if (!_urlConfigurada()) return;
     var payload = JSON.stringify({ action: 'votar', id: postId, tipo: tipo });
     fetchComTimeout(CONFIG_BLOG.APPS_SCRIPT_URL, {
         method: 'POST',

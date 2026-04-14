@@ -72,7 +72,7 @@ function aplicarConfigGlobal() {
     // Elementos marcados com data-config
     document.querySelectorAll('[data-config]').forEach(function (el) {
         switch (el.getAttribute('data-config')) {
-            case 'nomeCompleto':
+            case 'nome-completo':
                 el.textContent = nomeCompleto;
                 break;
             case 'copyright':

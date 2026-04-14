@@ -58,6 +58,7 @@ homepage.css - CSS exclusivo da página principal (homepage.html)
     width: 100%;
     height: 180px;
     object-fit: contain;
+    object-position: center top;
     display: block;
     border-bottom: 4px solid var(--caroco-marrom);
     background: var(--casca-escura);
