@@ -54,9 +54,11 @@ function gerarId() {
 }
 
 function jsonResponse(obj) {
-    return ContentService
-        .createTextOutput(JSON.stringify(obj))
-        .setMimeType(ContentService.MimeType.JSON);
+    var output ContentService
+        .createTextOutput(JSON.stringify(obj));
+        output.setMimeType(ContentService.MimeType.JSON);
+        // Headers CORS são adicionados automaticamente pelo Apps Script quando deployado com Web App
+        return output;
 }
 
 function dadosParaObjeto(cabecalho, linha) {

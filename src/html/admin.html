@@ -86,9 +86,14 @@
                         O token nunca vai parar o servidor público - é enviado diretamente ao Apps Script via POST.
                     </p>
                 </div>
-                <button class="admin-btn-salvar" id="btnSalvarConfig" type="button">
-                    <i class="fas fa-save"></i> Salvar configuração
-                </button>
+                <div style="display: flex; gap: 100px; flex-wrap: wrap;">
+                    <button class="admin-btn-salvar" id="btnSalvarConfig" type="button">
+                        <i class="fas fa-save"></i> Salvar Configuração
+                    </button>
+                    <button class="admin-btn-secundario" id="btnTestarConexao" type="button">
+                        <i class="fas fa-plug"></i> Testar Conexão
+                    </button>
+                </div>
                 <div class="admin-feedback" id="feedbackConfig" role="status" aria-live="polite"></div>
             </div>
         </section>

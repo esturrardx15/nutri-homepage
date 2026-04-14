@@ -106,7 +106,11 @@ function sanitizarConteudoAdmin(html) {
 function enviarParaApi(payload, callback) {
     var cfg = lerCfgApi();
     if (!cfg.url) {
-        callback(new Error('URL da API não configurada.'), null);
+        callback(new Error('URL da API não configurada. Acesse a seção "Configuração da API" acima.'), null);
+        return;
+    }
+    if (!cfg.token) {
+        callback(new Error('Token da API não configurado. Acesse a seção "Configuração da API" acima.'), null);
         return;
     }
     payload.token = cfg.token;
@@ -117,11 +121,26 @@ function enviarParaApi(payload, callback) {
         body: JSON.stringify(payload)
     })
         .then(function (r) {
-            if (!r.ok) throw new Error('HTTP ' + r.status);
+            if (!r.ok) {
+                throw new Error('Erro HTTP ' + r.status + '. Verifique se o Apps Script está deployado corretamente.');
+            }
             return r.json();
         })
-        .then(function (data) { callback(null, data); })
-        .catch(function (err) { callback(err, null); });
+        .then(function (data) { 
+            if (data && data.error) {
+                callback(new Error(data.error), null);
+            } else {
+                callback(null, data);
+            }
+        })
+        .catch(function (err) {
+            // Tratamento específico para erros CORS
+            if (err.messagte && err.message.includes('Failed to fetch')) {
+                callback(new Error('Erro de conexão (CORS). Verifique se o Apps Script está deployado como "Web App" com acesso "Anyone" e se a URL está correta.'), null);
+            } else {
+                callback(err, null);
+            }
+        });
 }
 
 function carregarPostsAdmin(callback) {
@@ -612,6 +631,7 @@ function configurarToggleSecoes() {
 
 function configurarUiConfig() {
     var btnSalvar = document.getElementById('btnSalvarConfig');
+    var btnTestar = document.getElementById('btnTestarConexap');
     var inputUrl = document.getElementById('adminApiUrl');
     var inputTok = document.getElementById('adminToken');
     var btnVerTok = document.getElementById('btnVerToken');
@@ -632,6 +652,45 @@ function configurarUiConfig() {
             } else {
                 mostrarFeedback('feedbackConfig', 'erro', '❌ URL inválida. Use uma URL do Google Apps Script (https://script.google.com/...).');
             }
+        });
+    }
+
+    // Testar conexão com o Apps Script
+    if (btnTestar) {
+        btnTestar.addEventListener('click', function () {
+            var url = (inputUrl || {}).value || '';
+            var token = (inputTok || {}).value || '';
+
+            if (!url || !token) {
+                mostrarFeedback('feedbackConfig', 'erro', '❌ Preencha a URL e o token para testar a conexão.');
+                return;
+            }
+
+            // Salvar temorariamente
+            salvarCfgApi(url, token);
+
+            btnTestar.disabled = true;
+            btnTestar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Testando...';
+
+            // Tenta buscar posts para validar conexao e token
+            carregarPostsAdmin(function (err, lista) {
+                btnTestar.disabled = false;
+                btnTestar.innerHTML = '<i class="fas fa-plug"></i> Testar Conexão';
+
+                if (err) {
+                    var msgErro = err.message || ' Erro desconhecido';
+                    if (msgErro.includes('CORS')) {
+                        mostrarFeedback('feedbackConfig', 'erro', '❌ Erro de CORS! O Apps Script não está configurado corretamente.');
+                    } else if (msgErro.includes('Token inválido')) {
+                        mostrarFeedback('feedbackConfig', 'erro', '❌ Token inválido! Verifique o token configurado no Apps Script e no painel.');
+                    } else {
+                        mostrarFeedback('feedbackConfig', 'erro', '❌ Erro: ' + msgErro);
+                    }
+                    return;
+                }
+
+                mostrarFeedback('feedbackConfig', 'ok', '✅ Conexão bem-sucedida! ' + lista.length + ' post(s) encontrado(s). Apps Script configurado corretamente.');
+            });
         });
     }
 
