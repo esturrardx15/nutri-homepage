@@ -10,7 +10,7 @@ var CONFIG = Object.freeze({
     profissao: 'Nutricionista',
     whatsapp: '+5534996399306',
     instagram: 'maianutricionista/',
-    email: 'nutrimariahkatharine@gmail.com',
+    email: 'eduteo13@gmail.com', //nutrimariahkatharine@gmail.com
     ano: '2026',
 
     // Carrossel - liste apenas os arquivos desejados de img
