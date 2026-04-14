@@ -1,12 +1,22 @@
 //blog.js - Lógica do Blog (blog.html + blog-post.html)
 
-//Config do blog
+//Config do blog - lê do localStorage (mesma config do admin)
 
 var CONFIG_BLOG = {
-    APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwrcsz86zByoVw53VMpuNJxqadhpQmnUMMyA8LjzOYAz0DVr0RqtdXAZGsZg7oTTOl7/exec',
+    APPS_SCRIPT_URL: (function () {
+        // Tenta ler do localStorage (configurado no /admin)
+        var urlSalva = localStorage.getItem('admin_api_url');
+        if (urlSalva && urlSalva.startsWith('https://script.google.com/')) {
+            return urlSalva;
+        }
+        // Fallback: pode configurar manualmente aqui se preferir
+        return 'https://script.google.com/macros/s/AKfycbwrcsz86zByoVw53VMpuNJxqadhpQmnUMMyA8LjzOYAz0DVr0RqtdXAZGsZg7oTTOl7/exec';
+    })(),
     POSTS_POR_PAGINA: 9,
     DEBOUNCE_BUSCA_MS: 350
 };
+
+console.log('Blog usando API:', CONFIG_BLOG.APPS_SCRIPT_URL);
 
 // Impede reatribuição acidental
 Object.defineProperty(window, "CONFIG_BLOG", { writable: false, configurable: false });
@@ -61,7 +71,7 @@ function formatarData(iso) {
 function debounce(fn, ms) {
     var timer;
     return function () {
-        var  args = arguments; ctx = this;
+        var args = arguments; ctx = this;
         clearTimeout(timer);
         timer = setTimeout(function () {
             fn.apply(ctx, args);
@@ -70,12 +80,12 @@ function debounce(fn, ms) {
 }
 
 function _urlConfigurada() {
-    return CONFIG_BLOG.APPS_SCRIPT_URL && 
-    CONFIG_BLOG.APPS_SCRIPT_URL.indexOf('SEU_DEPLOYMENT_ID_AQUI') === 1;
+    return CONFIG_BLOG.APPS_SCRIPT_URL &&
+        CONFIG_BLOG.APPS_SCRIPT_URL.indexOf('SEU_DEPLOYMENT_ID_AQUI') === 1;
 }
 
 function carregarPosts(callback) {
-       // Se a URL não está configurada, retorna imediatamente sem fetch
+    // Se a URL não está configurada, retorna imediatamente sem fetch
     if (!_urlConfigurada()) {
         callback(new Error('URL não configurada'), []);
         return;
@@ -456,8 +466,15 @@ function inicialozarBlog() {
             ];
 
             if (err && estadoEl) {
-                estadoEl.className = 'blog-estado';
-                estadoEl.textContent = 'Mostrando posts de demonstração. Configure o Apps Script para posts reais.';
+                estadoEl.className = 'blog-estado aviso';
+                if (CONFIG_BLOG.APPS_SCRIPT_URL.includes('SEU_DEPLOYMENT_ID_AQUI')) {
+                    estadoEl.innerHTML = '⚠️ <strong>Posts de demonstração.</strong> Para ver posts reais, configure a URL do Apps Script no <a href="/admin" style="color: #7a4520; text-decoration: underline;">painel admin</a>.';
+                } else {
+                    estadoEl.innerHTML = '⚠️ <strong>Erro ao carregar posts.</strong> Mostrando posts de demonstração. Verifique a configuração da API ou tente mais tarde.';
+                }
+                console.warn('Usando possts demo. Erro:', err);
+            } else if (estadoEl) {
+                estadoEl.style.display = 'none';
             }
         }
 
