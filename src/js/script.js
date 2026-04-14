@@ -278,7 +278,7 @@ function iniciarValidacaoFormulario() {
     var campoMensagem = document.getElementById('mensagem');
     var campoHoneypot = document.getElementById('website'); // Campo oculto para bots
     var btnEnviar = document.getElementById('btnEnviar');
-    var charCounter = document.getElementById('charCount');
+    var charCounter = document.getElementById('charCounter');
     var regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     // Rate-limit: impede reenvio em menos de 30 segundos
@@ -382,7 +382,7 @@ function iniciarValidacaoFormulario() {
         // Feedback visual
         btnEnviar.disabled = true;
         btnEnviar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Abrindo e-mail...';
-        window.location.href = mailto;
+        window.open(mailto, '_blank');
 
         ultimoEnvio = Date.now(); // Registra o horário do envio para rate-limit
 
