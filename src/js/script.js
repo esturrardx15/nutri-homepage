@@ -773,13 +773,13 @@ function iniciarCardsServicos() {
     cards.forEach(function (card) {
         card.addEventListener('click', function (e) {
             if (e.target.tagName === 'A') return;
-            window.location.href = 'servicos.html';
+            window.location.href = '/servicos';
         });
         card.setAttribute('role', 'button');
         card.setAttribute('tabindex', '0');
         card.setAttribute('title', 'Clique para ver todos os serviços');
         card.addEventListener('keydown', function (e) {
-            if (e.key === 'Enter' || e.key === ' ') {e.preventDefault(); window.location.href = 'servicos.html'; }
+            if (e.key === 'Enter' || e.key === ' ') {e.preventDefault(); window.location.href = '/servicos'; }
         });
     });
 }
