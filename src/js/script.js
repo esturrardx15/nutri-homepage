@@ -813,17 +813,6 @@ function iniciarBlogDestaques() {
             ];
         }
 
-
-
-        // Aplicar likes salvos no localStorage
-        posts.forEach(function (p) {
-            var salvo = localStorage.getItem('blog_likes_' + p.id);
-            if (salvo !== null) p.likes = parseInt(salvo);
-        });
-
-        // Ordenar por likes (desc) e pega top 3
-        var top3 = posts.sort(function (a, b) { return b.likes - a.likes; }).slice(0, 3);
-
         grid.innerHTML = '';
 
         top3.forEach(function (post) {
