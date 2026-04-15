@@ -813,87 +813,100 @@ function iniciarBlogDestaques() {
             ];
         }
 
-        grid.innerHTML = '';
+        // Aplicar localStorage apenas como backup se o post nao tiver contador da API
+        posts.forEach(function (p) {
+            if (typeof p.likes === 'undefined' || p.likes === null) {
+                var salvo = localStorage.getItem('blog_likes_' + p.id);
+                if (salvo !== null) {
+                    p.likes = parseInt(salvo);
+                } else {
+                    p.likes = 0;
+                }
+            }
 
-        top3.forEach(function (post) {
-            var excerpt = (post.conteudo || '').replace(/<[^>]*>/g, '').trim();
-            excerpt = excerpt.length > 100 ? excerpt.substring(0, 100) + '...' : excerpt;
+            var top3 = posts.sort(function (a, b) { return b.likes - a.likes; }).slice(0, 3);
 
-            var card = document.createElement('a');
-            card.className = 'blog-destaque-card';
-            card.href = '/blog/post?id=' + encodeURIComponent(post.id);
-            card.setAttribute('aria-label', 'Ler post: ' + (post.titulo || ''));
+            grid.innerHTML = '';
 
-            // Define ícone padrão se nao houver
-            var incone = post.icone || '🥑';
+            top3.forEach(function (post) {
+                var excerpt = (post.conteudo || '').replace(/<[^>]*>/g, '').trim();
+                excerpt = excerpt.length > 100 ? excerpt.substring(0, 100) + '...' : excerpt;
 
-            card.innerHTML =
-                '<div class="blog-destaque-icone">' + incone + '</div>' +
-                '<span class="blog-destaque-tema">' + sanitizarTexto(post.tema || 'Geral') + '</span>' +
-                '<h3>' + sanitizarTexto(post.titulo || '') + '</h3>' +
-                '<p>' + sanitizarTexto(excerpt) + '</p>' +
-                '<div class="blog-destaque-rodape">' +
-                '<span class="blog-destaque-likes">' +
-                '<i class="fas fa-thumbs-up" aria-hidden="true"></i> ' + (post.likes || 0) +
-                '</span>' +
-                '<span class="blog-destaque-ler">Ler post <i class="fas fa-arrow-right"></i></span>' +
-                '</div>';
+                var card = document.createElement('a');
+                card.className = 'blog-destaque-card';
+                card.href = '/blog/post?id=' + encodeURIComponent(post.id);
+                card.setAttribute('aria-label', 'Ler post: ' + (post.titulo || ''));
 
-            grid.appendChild(card);
+                // Define ícone padrão se nao houver
+                var incone = post.icone || '🥑';
+
+                card.innerHTML =
+                    '<div class="blog-destaque-icone">' + incone + '</div>' +
+                    '<span class="blog-destaque-tema">' + sanitizarTexto(post.tema || 'Geral') + '</span>' +
+                    '<h3>' + sanitizarTexto(post.titulo || '') + '</h3>' +
+                    '<p>' + sanitizarTexto(excerpt) + '</p>' +
+                    '<div class="blog-destaque-rodape">' +
+                    '<span class="blog-destaque-likes">' +
+                    '<i class="fas fa-thumbs-up" aria-hidden="true"></i> ' + (post.likes || 0) +
+                    '</span>' +
+                    '<span class="blog-destaque-ler">Ler post <i class="fas fa-arrow-right"></i></span>' +
+                    '</div>';
+
+                grid.appendChild(card);
+            });
         });
-    });
-}
+    }
 
 // Carrega posts da API para destaques da homepage
 function carregarPostsParaDestaques(callback) {
-    var apiUrl = localStorage.getItem('admin_api_url');
-    if (!apiUrl || !apiUrl.startsWith('https://script.google.com/')) {
-        apiUrl = 'https://script.google.com/macros/s/AKfycbwrcsz86zByoVw53VMpuNJxqadhpQmnUMMyA8LjzOYAz0DVr0RqtdXAZGsZg7oTTOl7/exec';
-    }
+            var apiUrl = localStorage.getItem('admin_api_url');
+            if (!apiUrl || !apiUrl.startsWith('https://script.google.com/')) {
+                apiUrl = 'https://script.google.com/macros/s/AKfycbwrcsz86zByoVw53VMpuNJxqadhpQmnUMMyA8LjzOYAz0DVr0RqtdXAZGsZg7oTTOl7/exec';
+            }
 
-    var url = apiUrl + '?action=posts_publicados';
+            var url = apiUrl + '?action=posts_publicados';
 
-    // Timeout de 10s para não travar a homepage
-    var controller = new AbortController();
-    var timeoutId = setTimeout(function () { controller.abort(); }, 10000);
+            // Timeout de 10s para não travar a homepage
+            var controller = new AbortController();
+            var timeoutId = setTimeout(function () { controller.abort(); }, 10000);
 
-    fetch(url, { signal: controller.signal })
-        .then(function (r) {
-            clearTimeout(timeoutId);
-            if (!r.ok) throw new Error('HTTP ' + r.status);
-            return r.json();
-        })
-        .then(function (data) {
-            var lista = Array.isArray(data) ? data : (data.posts || []);
-            callback(null, lista);
-        })
-        .catch(function (err) {
-            clearTimeout(timeoutId);
-            callback(err, []);
-        });
-}
+            fetch(url, { signal: controller.signal })
+                .then(function (r) {
+                    clearTimeout(timeoutId);
+                    if (!r.ok) throw new Error('HTTP ' + r.status);
+                    return r.json();
+                })
+                .then(function (data) {
+                    var lista = Array.isArray(data) ? data : (data.posts || []);
+                    callback(null, lista);
+                })
+                .catch(function (err) {
+                    clearTimeout(timeoutId);
+                    callback(err, []);
+                });
+        }
 
 // Auto-inicialização
 
 document.addEventListener('DOMContentLoaded', function () {
-    aplicarConfigGlobal();
-    iniciarFallbackImagens();
-    iniciarScrollUnificado();
-    iniciarHamburger();
-    iniciarTemaToggle();
-    iniciarSmoothScroll();
-    iniciarWhatsappFlutuante();
-    iniciarCardsServicos();
-    iniciarBlogDestaques();
+            aplicarConfigGlobal();
+            iniciarFallbackImagens();
+            iniciarScrollUnificado();
+            iniciarHamburger();
+            iniciarTemaToggle();
+            iniciarSmoothScroll();
+            iniciarWhatsappFlutuante();
+            iniciarCardsServicos();
+            iniciarBlogDestaques();
 
-    // Funções com guard interno (retornam cedo se o elemento não existe)
-    iniciarNavAtivo();
-    iniciarFAQ();
-    iniciarValidacaoFormulario();
-    iniciarCarrossel();
-    iniciarCarrosselDepoimentos();
+            // Funções com guard interno (retornam cedo se o elemento não existe)
+            iniciarNavAtivo();
+            iniciarFAQ();
+            iniciarValidacaoFormulario();
+            iniciarCarrossel();
+            iniciarCarrosselDepoimentos();
 
-    // Animação: seletor depende da página
-    var isServicos = document.querySelector('.servicos-grid');
-    iniciarAnimacaoScroll(isServicos ? '.card, .intro' : 'section, .hero-banner');
-});
+            // Animação: seletor depende da página
+            var isServicos = document.querySelector('.servicos-grid');
+            iniciarAnimacaoScroll(isServicos ? '.card, .intro' : 'section, .hero-banner');
+        });

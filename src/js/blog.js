@@ -100,7 +100,7 @@ function carregarPostPorId(id, callback) {
         .catch(function (err) { callback(err, null); });
 }
 
-function votarPost(postId, tipo) {
+function votarPost(postId, tipo, valorLocal) {
     var payload = JSON.stringify({ action: 'votar', id: postId, tipo: tipo });
     fetchComTimeout(CONFIG_BLOG.APPS_SCRIPT_URL, {
         method: 'POST',
@@ -108,15 +108,17 @@ function votarPost(postId, tipo) {
         body: payload
     }).then(function (r) { return r.json(); })
         .then(function (data) {
-            // Atualiza contador na tela com o valor real retornado pela API
+            // Se API retornar sucesso, usa valor dela e sincroniza localstorage
             if (data && typeof data.likes !== 'undefined') {
                 var el = document.getElementById('likeCount');
                 if (el) el.textContent = data.likes;
+                localStorage.setItem('blog_likes_' + postId, data.likes);
+                console.log(' ✓ Like salvo no servidor:', data.likes);
             }
         })
         .catch(function (err) {
-            console.warn('Erro ao enviar voto:', err);
-            // Em caso de erro, o usuário vê o feedback visual imediato mas o voto não é salvo no servidor.
+            console.warn('API indisponível, usando localStorage como backup');
+            // Mantém o valor do localStorage (já foi salvo antes de chamar esta função)
         });
 }
 
@@ -137,6 +139,18 @@ function renderizarCards(posts, pagina) {
         estado.textContent = 'Nenhum post encontrado.';
         return;
     }
+
+    // Aplicar localStorage apenas como backup se o post não tiver contador da API
+    posts.forEach(function (post) {
+        if (typeof post.likes === 'undefined' || post.likes === null) {
+            var likesLocal = localStorage.getItem('blog_likes_' + post.id);
+            if (likesLocal !== null) {
+                post.likes = parseInt(likesLocal);
+            } else {
+                post.likes = 0; // Valor padrão
+            }
+        }
+    });
 
     estado.textContent = 'Exibindo ' + posts.length + (posts.length === 1 ? ' post' : ' posts') +
         (_blogState.termoBusca ? ' para "' + _blogState.termoBusca + '"' : '') +
@@ -631,8 +645,16 @@ function renderizarPost(post, carregando, wrapper, erroEl) {
     var btnLike = document.getElementById('btnLike');
     var likeCount = document.getElementById('likeCount');
 
-    // Usa o contador da API (valor real compartilhado entre todos os usuários)
-    if (likeCount) likeCount.textContent = post.likes || 0;
+    // Prioridade: valor da API (servidor). Fallback: localStorage apenas se API não retornar
+    var likesAtual;
+    if (typeof post.likes !== 'undefined' && post.likes !== null) {
+        likesAtual = post.likes; // Usa valor da API (mesmo se for 0)
+    } else {
+        // Fallback: localStorage
+        var likesLocal = localStorage.getItem('blog_likes_' + post.id);
+        likesAtual = likesLocal !== null ? parseInt(likesLocal) : 0;
+    }
+    if (likeCount) likeCount.textContent = likesAtual
 
     if (jaVotou === 'like' && btnLike) btnLike.setAttribute('aria-pressed', 'true');
 
@@ -644,17 +666,19 @@ function renderizarPost(post, carregando, wrapper, erroEl) {
                 // Já votou - remove like (toggle)
                 this.setAttribute('aria-pressed', 'false');
                 var novoValor = parseInt(likeCount.textContent || 0) - 1;
-                novoValor = Math.max(0, novoValor); 
+                novoValor = Math.max(0, novoValor);
                 if (likeCount) likeCount.textContent = novoValor;
                 localStorage.removeItem(chaveLocal);
-                votarPost(post.id, 'unlike'); // Envia unlike ao servidor
+                localStorage.setItem('blog_likes_' + post.id, novoValor); // Salva contador
+                votarPost(post.id, 'unlike', novoValor);
             } else {
                 // Não votou - adiciona like
                 this.setAttribute('aria-pressed', 'true');
                 var novoValor = parseInt(likeCount.textContent || 0) + 1;
                 if (likeCount) likeCount.textContent = novoValor;
-                localStorage.setItem(chaveLocal, 'like'); // Marca que o usuário votou
-                votarPost(post.id, 'like'); // Envia like ao servidor
+                localStorage.setItem(chaveLocal, 'like');
+                localStorage.setItem('blog_likes_' + post.id, novoValor); // Salva contador
+                votarPost(post.id, 'like', novoValor);
             }
         });
     }
@@ -703,8 +727,8 @@ function carregarPostsRelacionados(postAtual) {
 
     carregarPosts(function (err, todos) {
         // Usa posts demo apenas se não houver posts reais disponíveis
-        if (err || !todos || todos.length === 0) { 
-            todos = _postsDeDemo(); 
+        if (err || !todos || todos.length === 0) {
+            todos = _postsDeDemo();
         }
 
         var relacionados = todos.filter(function (p) {
