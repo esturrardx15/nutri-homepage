@@ -813,17 +813,13 @@ function iniciarBlogDestaques() {
             ];
         }
 
-        // Aplica localStorage apenas como backup se o post nao tiver contador da API
+        // Aplica likes confirmados pelo servidor (salvos no localStorage após resposta do votarPost)
         posts.forEach(function (p) {
-            if (typeof p.likes === 'undefined' || p.likes === null) {
-                var salvo = localStorage.getItem('blog_likes_' + p.id);
-                if (salvo !== null) {
-                    p.likes = parseInt(salvo);
-                } else {
-                    p.likes = 0;
-                }
-            }
-        });
+            var salvo = localStorage.getItem('blog_likes_' + p.id);
+            if (salvo !== null) {
+            p.likes = parseInt(salvo);
+                } 
+            });
 
         // Ordenar por likes (desk) e pega o top 3
         var top3 = posts.sort(function (a, b) { return b.likes - a.likes; }).slice(0, 3);

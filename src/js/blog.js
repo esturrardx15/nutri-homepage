@@ -140,15 +140,13 @@ function renderizarCards(posts, pagina) {
         return;
     }
 
-    // Aplicar localStorage apenas como backup se o post não tiver contador da API
+    // Aplica likes confirmados pelo servidor (salvos no localStorage após resposta do votarPost)
+    // o endpoint posts_publicados pode retornar dados desatualizados,
+    // mas o blog_likes_x contém o último valor confirmado pelo servidor
     posts.forEach(function (post) {
-        if (typeof post.likes === 'undefined' || post.likes === null) {
-            var likesLocal = localStorage.getItem('blog_likes_' + post.id);
-            if (likesLocal !== null) {
-                post.likes = parseInt(likesLocal);
-            } else {
-                post.likes = 0; // Valor padrão
-            }
+        var likesLocal = localStorage.getItem('blog_likes_' + post.id);
+        if (likesLocal !== null) {
+            post.likes = parseInt(likesLocal);
         }
     });
 
@@ -645,15 +643,10 @@ function renderizarPost(post, carregando, wrapper, erroEl) {
     var btnLike = document.getElementById('btnLike');
     var likeCount = document.getElementById('likeCount');
 
-    // Prioridade: valor da API (servidor). Fallback: localStorage apenas se API não retornar
-    var likesAtual;
-    if (typeof post.likes !== 'undefined' && post.likes !== null) {
-        likesAtual = post.likes; // Usa valor da API (mesmo se for 0)
-    } else {
-        // Fallback: localStorage
-        var likesLocal = localStorage.getItem('blog_likes_' + post.id);
-        likesAtual = likesLocal !== null ? parseInt(likesLocal) : 0;
-    }
+    // Usa valor confirmado pelo servidor (localStorage) se existir, se não valor da API.
+    var likesLocal = localStorage.getItem('blog_likes_' + post.id);
+    var likesAtual = likesLocal !== null ? parseInt(likesLocal) : (post.likes || 0);
+
     if (likeCount) likeCount.textContent = likesAtual
 
     if (jaVotou === 'like' && btnLike) btnLike.setAttribute('aria-pressed', 'true');
