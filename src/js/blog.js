@@ -378,11 +378,12 @@ function inicialozarBlog() {
     }
 
     carregarPosts(function (err, lista) {
-        if (err || lista.length == 0) {
-            // Dados de demonstração quando o Apps Script não está configurado
+        // Usa posts demo apenas se não houver posts reais (erro OU lista vazia)
+        if (err || !lista || lista.length === 0) {
+            // Dados de demonstração quando o Apps Script não está configurado ou não há posts
             lista = [{
                 id: 'demo-1',
-                titulo: 'Como monstar um prato colorido e nutritivo',
+                titulo: 'Como montar um prato colorido e nutritivo',
                 conteudo: '<p>Um prato colorido garante variedade de nutrientes essenciais. Inclua folhas verdes, legumes alaranjados e proteínas de qualidade. A diversidade de cores indica presença de difenretes vitaminas, minerais e antioxidantes que seu corpo precisa diariamente.</p><p>Experimente incluir pelo menos 5 cores diferentes no almoço e no jantar. Você vai se surpreender com os resultados a médio prazo!</p>',
                 tema: 'Dicas práticas',
                 data: '2026-04-03',
@@ -543,11 +544,11 @@ function inicializarPost() {
 }
 
 function _postsDeDemo() {
-    // Compratilha os mesmos dados de demo de inicializarBlog
+    // Compartilha os mesmos dados de demo de inicializarBlog
     // usados como fallback quando a API não está configurada
     return [
-        { id: 'demo-1', titulo: 'Como monstar um prato colorido e nutritivo', conteudo: '<p>Um prato colorido garante variedade de nutrientes essenciais.</p>', tema: 'Dicas práticas', data: '2026-04-03', likes: 12, img_fundo_b64: '', img_lateral_b64: '', img_lado: 'esquerda' },
-        { id: 'demo-2', titulo: 'Hidratação: Por que água é o melhor suplemento', conteudo: '<p>Antes de investir em suplementos caros, certifique-se de que está bebendo água o suficiente.</p>', tema: 'Hidratação', data: '2026-04-03', likes: 8, img_lateral_b64: '', img_fundo_b64: '', img_lado: 'direita' },
+        { id: 'demo-1', titulo: 'Como montar um prato colorido e nutritivo', conteudo: '<p>Um prato colorido garante variedade de nutrientes essenciais.</p>', tema: 'Dicas práticas', data: '2026-04-03', likes: 12, img_fundo_b64: '', img_lateral_b64: '', img_lado: 'esquerda' },
+        { id: 'demo-2', titulo: 'Hidratação: por que água é o melhor suplemento', conteudo: '<p>Antes de investir em suplementos caros, certifique-se de que está bebendo água o suficiente.</p>', tema: 'Hidratação', data: '2026-04-03', likes: 8, img_lateral_b64: '', img_fundo_b64: '', img_lado: 'direita' },
         { id: 'demo-3', titulo: 'Reeducação alimentar vs dieta: qual a diferença?', conteudo: '<p>Dietas restritivas trazem resultados rápidos, mas raramente sustentáveis a longo prazo.</p>', tema: 'Reeducação', data: '2026-04-03', likes: 20, img_lateral_b64: '', img_fundo_b64: '', img_lado: 'direita' },
         { id: 'demo-4', titulo: 'Receita: bowl proteico pós-treino', conteudo: '<p>O pós-treino é o momento ideal para repor proteínas e carboidratos.</p>', tema: 'Receitas', data: '2026-04-03', likes: 30, img_lateral_b64: '', img_fundo_b64: '', img_lado: 'esquerda' }
     ];
@@ -707,7 +708,10 @@ function carregarPostsRelacionados(postAtual) {
     if (!grid) return;
 
     carregarPosts(function (err, todos) {
-        if (err) { todos = _postsDeDemo(); }
+        // Usa posts demo apenas se não houver posts reais disponíveis
+        if (err || !todos || todos.length === 0) { 
+            todos = _postsDeDemo(); 
+        }
 
         var relacionados = todos.filter(function (p) {
             return p.id !== postAtual.id && p.tema === postAtual.tema;

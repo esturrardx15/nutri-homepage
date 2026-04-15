@@ -382,7 +382,7 @@ function iniciarValidacaoFormulario() {
         // Feedback visual imediato
         btnEnviar.disabled = true;
         btnEnviar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Abrindo e-mail...';
-        
+
         // Limpa formulário imediatamente
         setTimeout(function () {
             form.reset();
@@ -726,7 +726,7 @@ function iniciarWhatsappFlutuante() {
     }
 
     document.addEventListener('dblclick', function (e) {
-        if (wppBtn.classList.contains('hidden') && e.ctrlKey){
+        if (wppBtn.classList.contains('hidden') && e.ctrlKey) {
             wppBtn.classList.remove('hidden');
             localStorage.setItem('wpp-hidden', 'false');
         }
@@ -788,7 +788,7 @@ function iniciarCardsServicos() {
         card.setAttribute('tabindex', '0');
         card.setAttribute('title', 'Clique para ver todos os serviços');
         card.addEventListener('keydown', function (e) {
-            if (e.key === 'Enter' || e.key === ' ') {e.preventDefault(); window.location.href = '/servicos'; }
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); window.location.href = '/servicos'; }
         });
     });
 }
@@ -799,50 +799,89 @@ function iniciarBlogDestaques() {
     var grid = document.getElementById('blogDestaquesGrid');
     if (!grid) return;
 
-    var posts = [
-        {id: 'demo-1', titulo: 'Como manter um prato colorido e nutritivo', conteudo: '<p>Um prato colorido garante variedade de nutrientes essenciais. Inclua folhas verdes, legumes alaranjados e proteinas de qualidade.</p>', tema: 'Dicas práticas', data: '2026-04-06', likes: 12, icone: '🥗'},
-        {id: 'demo-2', titulo: 'Como manter um prato colorido e nutritivo', conteudo: '<p>Um prato colorido garante variedade de nutrientes essenciais.</p>', tema: 'Dicas práticas', data: '2026-04-06', likes: 20, icone: '🥗'},
-        {id: 'demo-3', titulo: 'Como manter um prato colorido e nutritivo', conteudo: '<p>Um prato </p>', tema: 'Dicas práticas', data: '2026-04-06', likes: 17, icone: '🥗'},
-        {id: 'demo-4', titulo: 'Como manter um prato colorido e nutritivo', conteudo: '<p>Um prato colorido garante variedade de nutrientes essenciais. Inclua folhas verdes, legumes alaranjados e proteinas de qualidade.</p>', tema: 'Dicas práticas', data: '2026-04-06', likes: 12, icone: '🥗'},
-        {id: 'demo-5', titulo: 'Como manter um prato colorido e nutritivo', conteudo: '<p>Um prato colorido garante variedade de nutrientes essenciais. Inclua folhas verdes, legumes alaranjados e proteinas de qualidade.</p>', tema: 'Dicas práticas', data: '2026-04-06', likes: 15, icone: '🥗'},
-        {id: 'demo-6', titulo: 'Como manter um prato colorido e nutritivo', conteudo: '<p>Um prato colorido garante variedade de nutrientes essenciais. Inclua folhas verdes, legumes alaranjados e proteinas de qualidade.</p>', tema: 'Dicas práticas', data: '2026-04-06', likes: 12, icone: '🥗'}
-    ];
+    // Carrega posts reais da API
+    carregarPostsParaDestaques(function (err, posts) {
+        // Fallback para posts demo apenas se não houver posts reais
+        if (err || !posts || posts.length === 0) {
+            posts = [
+                { id: 'demo-1', titulo: 'Como manter um prato colorido e nutritivo', conteudo: '<p>Um prato colorido garante variedade de nutrientes essenciais. Inclua folhas verdes, legumes alaranjados e proteinas de qualidade.</p>', tema: 'Dicas práticas', data: '2026-04-06', likes: 12, icone: '🥗' },
+                { id: 'demo-2', titulo: 'Como manter um prato colorido e nutritivo', conteudo: '<p>Um prato colorido garante variedade de nutrientes essenciais.</p>', tema: 'Dicas práticas', data: '2026-04-06', likes: 20, icone: '🥗' },
+                { id: 'demo-3', titulo: 'Como manter um prato colorido e nutritivo', conteudo: '<p>Um prato </p>', tema: 'Dicas práticas', data: '2026-04-06', likes: 17, icone: '🥗' },
+                { id: 'demo-4', titulo: 'Como manter um prato colorido e nutritivo', conteudo: '<p>Um prato colorido garante variedade de nutrientes essenciais. Inclua folhas verdes, legumes alaranjados e proteinas de qualidade.</p>', tema: 'Dicas práticas', data: '2026-04-06', likes: 12, icone: '🥗' },
+                { id: 'demo-5', titulo: 'Como manter um prato colorido e nutritivo', conteudo: '<p>Um prato colorido garante variedade de nutrientes essenciais. Inclua folhas verdes, legumes alaranjados e proteinas de qualidade.</p>', tema: 'Dicas práticas', data: '2026-04-06', likes: 15, icone: '🥗' },
+                { id: 'demo-6', titulo: 'Como manter um prato colorido e nutritivo', conteudo: '<p>Um prato colorido garante variedade de nutrientes essenciais. Inclua folhas verdes, legumes alaranjados e proteinas de qualidade.</p>', tema: 'Dicas práticas', data: '2026-04-06', likes: 12, icone: '🥗' }
+            ];
+        }
 
-    // Aplicar likes salvos no localStorage
-    posts.forEach(function (p){
-        var salvo = localStorage.getItem('blog_likes_' + p.id);
-        if (salvo !== null) p.likes = parseInt(salvo);    
+
+
+        // Aplicar likes salvos no localStorage
+        posts.forEach(function (p) {
+            var salvo = localStorage.getItem('blog_likes_' + p.id);
+            if (salvo !== null) p.likes = parseInt(salvo);
+        });
+
+        // Ordenar por likes (desc) e pega top 3
+        var top3 = posts.sort(function (a, b) { return b.likes - a.likes; }).slice(0, 3);
+
+        grid.innerHTML = '';
+
+        top3.forEach(function (post) {
+            var excerpt = (post.conteudo || '').replace(/<[^>]*>/g, '').trim();
+            excerpt = excerpt.length > 100 ? excerpt.substring(0, 100) + '...' : excerpt;
+
+            var card = document.createElement('a');
+            card.className = 'blog-destaque-card';
+            card.href = '/blog/post?id=' + encodeURIComponent(post.id);
+            card.setAttribute('aria-label', 'Ler post: ' + (post.titulo || ''));
+
+            // Define ícone padrão se nao houver
+            var incone = post.icone || '🥑';
+
+            card.innerHTML =
+                '<div class="blog-destaque-icone">' + incone + '</div>' +
+                '<span class="blog-destaque-tema">' + sanitizarTexto(post.tema || 'Geral') + '</span>' +
+                '<h3>' + sanitizarTexto(post.titulo || '') + '</h3>' +
+                '<p>' + sanitizarTexto(excerpt) + '</p>' +
+                '<div class="blog-destaque-rodape">' +
+                '<span class="blog-destaque-likes">' +
+                '<i class="fas fa-thumbs-up" aria-hidden="true"></i> ' + (post.likes || 0) +
+                '</span>' +
+                '<span class="blog-destaque-ler">Ler post <i class="fas fa-arrow-right"></i></span>' +
+                '</div>';
+
+            grid.appendChild(card);
+        });
     });
+}
 
-    // Ordenar por likes (desc) e pega top 3
-    var top3 = posts.sort(function (a, b) { return b.likes - a.likes; }).slice(0, 3);
+// Carrega posts da API para destaques da homepage
+function carregarPostsParaDestaques(callback) {
+    var apiUrl = localStorage.getItem('admin_api_url');
+    if (!apiUrl || !apiUrl.startsWith('https://script.google.com/')) {
+        apiUrl = 'https://script.google.com/macros/s/AKfycbwrcsz86zByoVw53VMpuNJxqadhpQmnUMMyA8LjzOYAz0DVr0RqtdXAZGsZg7oTTOl7/exec';
+    }
 
-    grid.innerHTML = '';
-    
-    top3.forEach(function (post){
-        var excerpt = (post.conteudo || '').replace(/<[^>]*>/g, '').trim();
-        excerpt = excerpt.length > 100 ? excerpt.substring(0, 100) + '...' : excerpt;
+    var url = apiUrl + '?action=posts_publicados';
 
-        var card = document.createElement('a');
-        card.className = 'blog-destaque-card';
-        card.href = 'blog.html?id=' + encodeURIComponent(post.id);
-        card.setAttribute('aria-label', 'Ler post: ' + (post.titulo || ''));
+    // Timeout de 10s para não travar a homepage
+    var controller = new AbortController();
+    var timeoutId = setTimeout(function () { controller.abort(); }, 10000);
 
-        card.innerHTML =
-        '<div class="blog-destaque-icone">' + post.icone + '</div>' +
-        '<span class="blog-destaque-tema">' + sanitizarTexto(post.tema || 'Geral') + '</span>' +
-        '<h3>' + sanitizarTexto(post.titulo || '') + '</h3>' +
-        '<p>' + sanitizarTexto(excerpt) + '</p>' +
-        '<div class="blog-destaque-rodape">' +
-        '<span class="blog-destaque-likes">' +
-        '<i class="fas fa-thumbs-up" aria-hidden="true"></i> ' + (post.likes || 0) +
-        '</span>' +
-        '<span class="blog-destaque-ler">Ler post <i class="fas fa-arrow-right"></i></span>' +
-        '</div>';
-
-        grid.appendChild(card);
-        
-    });
+    fetch(url, { signal: controller.signal })
+        .then(function (r) {
+            clearTimeout(timeoutId);
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            return r.json();
+        })
+        .then(function (data) {
+            var lista = Array.isArray(data) ? data : (data.posts || []);
+            callback(null, lista);
+        })
+        .catch(function (err) {
+            clearTimeout(timeoutId);
+            callback(err, []);
+        });
 }
 
 // Auto-inicialização
